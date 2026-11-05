@@ -249,3 +249,11 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
   .zh-certs .shell{gap:.4rem}
   .zh-certs ul{gap:.15rem 1rem;font-size:.8125rem;line-height:1.45}
 }
+/* certificates (bold, white, Google first) apart from the three promises (normal, grey) */
+.zh-certs-label{flex-basis:100%}
+.zh-certs .zh-certs-c li{color:var(--color-fg);font-weight:800;letter-spacing:-.01em}
+.zh-certs .zh-certs-p li{color:var(--color-fg-2);font-weight:400}
+.zh-certs .zh-certs-c li:before{display:none}
+.zh-certs ul{flex-basis:100%;column-gap:1.15rem}
+/* wide screens: one row, a thin vertical line between the certificates and the promises */
+@media (min-width:80rem){.zh-certs ul{flex-basis:auto}.zh-certs .shell{column-gap:1.5rem}.zh-certs .zh-certs-p{border-left:1px solid var(--color-line-2);padding-left:1.5rem}}
