@@ -148,6 +148,7 @@
         // an email in "contact" also goes as _replyto, so "Reply" in Formspree's email goes to the client
         const body = new FormData(form);
         if (isEmail(contact.value)) body.append("_replyto", contact.value.trim());
+        body.append("_subject", "Free check: " + site.value.trim()); // subject of Formspree's email (EN and HR alike)
         fetch(d.endpoint, { method: "POST", body, headers: { Accept: "application/json" }, signal: ctl.signal })
           .then((r) => { if (!r.ok) throw new Error(r.status); thanks(); })
           .catch(() => { btn.disabled = false; btn.textContent = label; fail(); })

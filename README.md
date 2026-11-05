@@ -87,7 +87,8 @@ Where it sends is one setting, `FORM_ENDPOINT` at the top of `tools/build.py`:
 - `''`: the button opens WhatsApp with the two fields as a ready message.
 - A Formspree address (now `https://formspree.io/f/mnpprlyv`): the form is sent there (fields `site`, `contact`, `language`, `page`; the hidden
   `_gotcha` field is the spam trap Formspree knows; when `contact` is an email it is also sent as `_replyto`,
-  so "Reply" in Formspree's email goes to the client). After success the form is replaced by
+  so "Reply" in Formspree's email goes to the client; `_subject` is "Free check: " + the first field, EN and HR
+  alike, so the email's subject shows the site or business name). After success the form is replaced by
   "Got it. You'll hear from us within 24 hours."; on an error a WhatsApp link is shown.
 
 To switch it on: make a form at formspree.io (it shows an address like `https://formspree.io/f/abcdwxyz`),
