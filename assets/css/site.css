@@ -365,3 +365,11 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 .zf-ok:focus{outline:none}
 .zh-final-in .zf-form,.zh-final-in .zf-ok{max-width:44rem}
 @media (max-width:39.99rem){.zf-btn{width:100%}}
+/* Hero, Nov 2026: eyebrow, headline, subtitle and form are there at once (no rise, no zipper over the hero).
+   Phones (< 768 px): eyebrow, headline, subtitle, form, WhatsApp link, then the phone. */
+.zs-r,.zs-cap{transition-duration:.3s}
+@media (max-width:47.99rem){
+  .zh-hero .zh-sub{display:block;order:3;font-size:1.0625rem;line-height:1.45}
+  .zh-hero .zh-actions{order:4;margin-top:.15rem}
+  .zh-hero .zs{order:5;margin-top:1rem}
+}
