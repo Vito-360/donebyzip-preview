@@ -51,6 +51,32 @@
       io.observe(zs);
     });
 
+    /* Section 02, card "Found": "restaurant near me" is typed into the empty field (~1 s, like the hero),
+       then "Your business" appears. Starts when the card is on screen, runs once, stays on the end state.
+       Reduced motion: end state at once. Without JS the end state shows. */
+    $$("[data-find]").forEach((zf) => {
+      const q = zf.querySelector(".zf-q");
+      const res = zf.querySelector(".zf-res");
+      const done = () => zf.classList.add("zs-done");
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return done();
+      const text = q.dataset.q;
+      const io = new IntersectionObserver(([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        q.textContent = "";
+        zf.classList.add("zs-typing");
+        let i = 0;
+        const type = () => {
+          q.textContent = text.slice(0, ++i);
+          if (i < text.length) return setTimeout(type, Math.round(1000 / text.length));
+          setTimeout(() => res.classList.add("is-in"), 300);
+          setTimeout(done, 750);
+        };
+        setTimeout(type, 300);
+      }, { threshold: 0.6 });
+      io.observe(zf);
+    });
+
     /* Services dropdown in the header: click / Enter / Space toggles, Esc closes and returns focus,
        a click or focus outside closes it. */
     $$(".zn-dd").forEach((dd) => {
