@@ -233,3 +233,5 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
   .zh-certs ul{gap:.15rem 1rem;font-size:.8125rem;line-height:1.45}
 }
 :root{--zh-no-size:5.5rem}
+/* the sticky button is only for screens under 1024 px; from there on the header's "Free check" is always visible */
+@media (min-width:64rem){.zc{display:none}}
