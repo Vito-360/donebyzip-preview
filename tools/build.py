@@ -136,13 +136,11 @@ def build():
         body = re.sub(r'\{\{price:([a-z0-9-]+)\}\}', lambda m: price(prices, m.group(1), p['lang'], p['src']), body)
         n_waves = iter(range(1, 100))
         body = re.sub(r'<!--#waves-->', lambda m: waves(next(n_waves)), body)
-        app_data = ''.join(' data-%s="%s"' % (k, p[k]) for k in
-                           ('required', 'invalidemail', 'sending', 'success', 'errorserver'))
         page = layout
         for k, v in (('lang', p['lang']), ('title', p['title']), ('description', p['description']),
                      ('canonical', SITE + url_path(p['route'])), ('alternates', alternates),
                      ('hash_redirect', hash_redirect),
-                     ('og_image', '%s/assets/og/og-%s.jpg' % (SITE, p['lang'])), ('og_alt', OG_ALT[p['lang']]), ('app_data', app_data), ('content', body)):
+                     ('og_image', '%s/assets/og/og-%s.jpg' % (SITE, p['lang'])), ('og_alt', OG_ALT[p['lang']]), ('content', body)):
             page = page.replace('{{%s}}' % k, v)
         left = re.findall(r'\{\{\w+\}\}', page)
         if left:

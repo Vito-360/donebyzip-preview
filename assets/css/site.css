@@ -264,3 +264,5 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 .zk-call-full{width:100%}
 /* one key phrase per list item on the service pages */
 .kw{color:var(--color-fg);font-weight:700}
+/* landing pages: the four short steps inside the "How it works" card */
+.zl-steps{margin-top:0}
