@@ -44,10 +44,6 @@ a.chip{min-height:2.75rem}
 .zh-cta{gap:.6rem}
 .zh-link{display:inline-flex;align-items:center;min-height:2.75rem;color:var(--color-fg);font-size:1.0625rem;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
 .zh-link:hover{text-decoration-thickness:2px}
-.zh-figure{margin:0}
-.zh-figure:not(:has(img)){display:none}
-.zh-figure img{display:block;width:100%;height:auto;aspect-ratio:900/1125;object-fit:cover}
-@media (min-width:64rem){.zh-hero-grid:has(.zh-figure img){grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}}
 @media (max-width:39.99rem){.zh-actions .zh-cta{width:100%}}
 /* certificates: one calm row */
 .zh-certs{padding-block:1.5rem;border-top:1px solid var(--color-line)}
@@ -112,15 +108,8 @@ a.chip{min-height:2.75rem}
 footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 /* "Your business" card on /work: an empty black panel that stands out on the #141414 band */
 .zw-blank{background:#000;border-color:var(--color-line-2)}
-/* Phones, while the hero has no character image: no full-screen hero, so section 02 starts close
-   below the button. The bottom padding still holds the 01. With an image the full height comes back. */
-@media (max-width:39.99rem){.zh-hero:not(:has(.zh-figure img)){min-height:0;align-items:flex-start}}
-/* One column (phones, tablets) with the character image: the photo ends the hero, no empty band below it;
-   the 01 sits on the photo's dark floor, bottom right (the bottom of the photo has nothing important). */
-@media (max-width:63.99rem){
-  .zh-hero:has(.zh-figure img){padding-bottom:0}
-  .zh-hero:has(.zh-figure img) .zh-no-row{z-index:2;bottom:.5rem}
-}
+/* Phones: the hero is not a full screen tall, so section 02 starts close below it; the bottom padding holds the 01. */
+@media (max-width:39.99rem){.zh-hero{min-height:0;align-items:flex-start}}
 /* ---- Header: Services dropdown ---- */
 .zn-dd{position:relative;display:flex}
 .zn-dd-btn{display:inline-flex;align-items:center;gap:.35rem;min-height:2.75rem;cursor:pointer}
@@ -175,3 +164,5 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 .zc-small a{display:inline-flex;align-items:center;min-height:2.75rem;color:var(--color-fg-3);text-decoration:underline;text-underline-offset:.25em}
 .zc-small a:hover{color:var(--color-fg-2)}
 @media (prefers-reduced-motion:reduce){.zc-box{animation:none}}
+/* ---- Wavy lines behind the home hero and section 07 (inline SVG from tools/build.py) ---- */
+.zw-waves{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:none}

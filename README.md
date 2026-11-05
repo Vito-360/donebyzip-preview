@@ -25,24 +25,13 @@ Do not edit `index.html`, `*/index.html`, `sitemap.xml` or `robots.txt` by hand:
 `src/pages/index.html` (EN) and `src/pages/hr/index.html` (HR), sections 01–07 in order:
 hero, three problems, what the free check looks like, work, packages, questions, WhatsApp.
 
-### Hero image (the main character)
+### Hero
 
-`assets/img/hero-character.webp` (900 × 1125, 4:5) is in both home pages (`<figure class="zh-figure">` under the
-comment `HERO IMAGE`), with an alt text in each language. Without an `<img>` there the figure is hidden and the
-hero is a single column (CSS `:has(img)`).
+No photo in the hero (decision after review, Nov 2026). Behind the hero and section 07 are soft wavy lines:
+an inline SVG made by `waves()` in `tools/build.py` (marker `<!--#waves-->` in the page), #1a1a1a, 1.25 px, static.
 
-It is made by **`python3 tools/compose-hero.py`** (Pillow + numpy) from two files in `src/images/`:
-`hero-photo.jpg` (the photo, 4:5) and `hero-character-green.jpg` (the drawn character on a green screen).
-The script keys out the green (no green fringe, the white body fully opaque), cuts the figure at the knees,
-places it (`--head-top`, `--center-x`; it refuses to cross into the right half), blurs readable text (`--blur`)
-and writes two versions:
-
-- `hero-character.webp`: (a) the character pure white, as in the videos; **used on the site**;
-- `hero-character-warm.webp`: (b) the white slightly warmed by the scene's light (to compare; switch the
-  `src` in both home pages to use it).
-
-New photo or character: replace the files in `src/images/` (or pass `--photo` / `--character`), run the script,
-then `python3 tools/build.py` is not needed unless the HTML changes.
+The character-on-photo tool is kept for later: `tools/compose-hero.py` with its sources in `src/images/`
+(not deployed). It writes `assets/img/hero-character.webp`; to use it again, put an `<img>` back in the hero.
 
 ### Prices
 
@@ -100,7 +89,6 @@ small script at the top of every page.
 ## Prije objave
 
 - [ ] **Cijene** u `src/data/prices.json` (sada su sve prazne; vidi "Prices" gore).
-- [ ] **Slika glavnog lika**: ubačena je verzija (a); odabrati (a) čisto bijeli ili (b) utopljeni lik (vidi "Hero image").
 - [ ] **Prije/poslije koncepti**: sekcija još ne postoji, dodaje se na početnu kad budu gotovi.
 - [ ] **Prazna polja u politici privatnosti** (`src/pages/privacy.html`, `src/pages/hr/privatnost.html`):
       ime voditelja obrade i ostala označena polja, te provjera popisa obrađivača.

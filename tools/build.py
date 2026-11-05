@@ -55,6 +55,29 @@ def price(prices, key, lang, src):
     return t['fmt'].format(n=n) + (t['mo'] if p.get('monthly') else '')
 
 
+def waves(lines=8, width=1440, height=800, amp=26.0, length=760.0):
+    """Soft parallel wavy lines as an inline SVG (behind the home hero and section 07).
+    Each line is a sine wave drawn as smooth cubic curves (Catmull-Rom); the lines are evenly spaced and
+    shifted a little in phase, so they stay parallel but never look ruled. Static, #1a1a1a, 1.25 px."""
+    import math
+    step = 90.0
+    paths = []
+    for i in range(lines):
+        y0 = height * (i + 1) / (lines + 1)
+        phase = i * 0.38
+        xs = [x * step for x in range(int(width / step) + 3)]
+        pts = [(x - step, y0 + amp * math.sin(2 * math.pi * (x - step) / length + phase)) for x in xs]
+        d = 'M%.0f %.1f' % pts[1]
+        for k in range(1, len(pts) - 2):
+            p0, p1, p2, p3 = pts[k - 1], pts[k], pts[k + 1], pts[k + 2]
+            c1 = (p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6)
+            c2 = (p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6)
+            d += 'C%.0f %.1f %.0f %.1f %.0f %.1f' % (c1 + c2 + p2)
+        paths.append('<path d="%s" vector-effect="non-scaling-stroke"/>' % d)
+    return ('<svg class="zw-waves" aria-hidden="true" focusable="false" viewBox="0 0 %d %d" preserveAspectRatio="none">'
+            '<g fill="none" stroke="#1a1a1a" stroke-width="1.25" stroke-linecap="round">%s</g></svg>' % (width, height, ''.join(paths)))
+
+
 def load_pages():
     pages = []
     for path in sorted(glob.glob(os.path.join(SRC, 'pages', '**', '*.html'), recursive=True)):
@@ -107,6 +130,7 @@ def build():
             part = re.sub(r'<!--if:footer_cta-->(.*?)<!--/if:footer_cta-->', lambda m: m.group(1) if footer_cta else '', part, flags=re.S)
             body = body.replace(marker, part)
         body = re.sub(r'\{\{price:([a-z0-9-]+)\}\}', lambda m: price(prices, m.group(1), p['lang'], p['src']), body)
+        body = body.replace('<!--#waves-->', waves())
         app_data = ''.join(' data-%s="%s"' % (k, p[k]) for k in
                            ('required', 'invalidemail', 'sending', 'success', 'errorserver'))
         page = layout
