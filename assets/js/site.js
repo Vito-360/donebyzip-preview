@@ -264,6 +264,25 @@
     root.querySelectorAll("[data-refract]").forEach((el) => ro.observe(el));
   }
 
+  /* Tab title while the visitor is on another tab: "Problem?", "Zip it!", "Send it!", round and round,
+     every 1.5 s (the same English words on HR pages). Back on the tab, the page's own title returns at once.
+     The favicon does not change. */
+  (() => {
+    const words = ["Problem?", "Zip it!", "Send it!"];
+    let own = document.title, timer = 0;
+    document.addEventListener("visibilitychange", () => {
+      clearInterval(timer);
+      if (document.hidden) {
+        own = document.title;
+        let i = 0;
+        document.title = words[i];
+        timer = setInterval(() => { i = (i + 1) % words.length; document.title = words[i]; }, 1500);
+      } else {
+        document.title = own;
+      }
+    });
+  })();
+
   /* "/work/#grbic-doo" opens that project's popup. */
   init(app);
   const fromHash = () => { if (location.hash.length > 1) openWork(location.hash.slice(1)); };
