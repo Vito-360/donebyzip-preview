@@ -137,11 +137,16 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 .zp-line{color:var(--color-fg-2);font-size:.9375rem;line-height:1.55}
 .zp-btn{width:fit-content;margin-top:.5rem}
 @media (max-width:63.99rem){.zp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:39.99rem){
-  .zp-grid{display:flex;gap:.875rem;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;
-    margin-inline:calc(-1 * clamp(1.25rem,5vw,2.5rem));padding-inline:clamp(1.25rem,5vw,2.5rem);scroll-padding-inline:clamp(1.25rem,5vw,2.5rem);padding-bottom:.5rem;scrollbar-width:none}
-  .zp-grid::-webkit-scrollbar{display:none}
-  .zp-item{flex:0 0 82%;scroll-snap-align:start}
+/* phones (< 768 px): two projects per row (6 cards = 3 rows); the category stays on one line, cut with "…" */
+@media (max-width:47.99rem){
+  .zp-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem .75rem}
+  .zp-item,.zp-card{min-width:0}
+  .zp-shot{border-radius:.75rem;margin-bottom:.4rem}
+  .zp-name{font-size:1.0625rem}
+  .zp-cat{font-size:.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .zp-status{font-size:.75rem;gap:.4rem}
+  .zp-line{font-size:.8125rem;line-height:1.45}
+  .zp-btn{width:100%;min-height:2.75rem;padding:0 .75rem;font-size:.8125rem;white-space:normal;text-align:center;line-height:1.2}
 }
 @media (prefers-reduced-motion:reduce){.zp-shot img{transition:none}}
 /* ---- Sticky "Free check" button and its box (home) ---- */
