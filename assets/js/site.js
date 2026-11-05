@@ -65,23 +65,12 @@
       document.addEventListener("pointerdown", (e) => { if (!dd.contains(e.target)) setDd(false); });
     });
 
-    /* FAQ: one open at a time, the open one turns white */
+    /* FAQ: one open at a time. The open box keeps the closed colours (question #fafafa, answer #a1a1a9);
+       only the + turns into a minus. */
     const accs = $$(".acc");
     const setAcc = (acc, open) => {
       acc.dataset.open = open;
       acc.querySelector("button").setAttribute("aria-expanded", open);
-      acc.classList.toggle("border-transparent", open);
-      acc.classList.toggle("bg-fg", open);
-      acc.classList.toggle("text-void", open);
-      acc.classList.toggle("border-line", !open);
-      acc.classList.toggle("bg-card-hi/60", !open);
-      acc.classList.toggle("text-fg", !open);
-      const plus = acc.querySelector(".acc-plus");
-      plus.classList.toggle("bg-black/10", open);
-      plus.classList.toggle("bg-white/10", !open);
-      const p = acc.querySelector(".acc-panel p");
-      p.classList.toggle("text-black/65", open);
-      p.classList.toggle("text-fg-2", !open);
     };
     accs.forEach((acc) =>
       acc.querySelector("button").addEventListener("click", () => {
