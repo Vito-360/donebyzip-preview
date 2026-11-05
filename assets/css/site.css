@@ -116,3 +116,8 @@ a.chip{min-height:2.75rem}
 .zw-cards{margin-top:clamp(3rem,6vw,5rem);padding-block:clamp(3.5rem,7vw,6rem)}
 /* footer without its CTA block (footer_cta: off) */
 footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
+/* "Your business" card on /work: an empty black panel that stands out on the #141414 band */
+.zw-blank{background:#000;border-color:var(--color-line-2)}
+/* Phones, while the hero has no character image: no full-screen hero, so section 02 starts close
+   below the button. The bottom padding still holds the 01. With an image the full height comes back. */
+@media (max-width:39.99rem){.zh-hero:not(:has(.zh-figure img)){min-height:0;align-items:flex-start}}
