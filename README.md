@@ -84,8 +84,8 @@ page the marker `<!--#form-->` puts it there. Behaviour: `[data-form]` in `asset
 
 Where it sends is one setting, `FORM_ENDPOINT` at the top of `tools/build.py`:
 
-- `''` (now): the button opens WhatsApp with the two fields as a ready message.
-- A Formspree address: the form is sent there (fields `site`, `contact`, `language`, `page`; the hidden
+- `''`: the button opens WhatsApp with the two fields as a ready message.
+- A Formspree address (now `https://formspree.io/f/mnpprlyv`): the form is sent there (fields `site`, `contact`, `language`, `page`; the hidden
   `_gotcha` field is the spam trap Formspree knows). After success the form is replaced by
   "Got it. You'll hear from us within 24 hours."; on an error a WhatsApp link is shown.
 
@@ -141,7 +141,8 @@ small script at the top of every page.
 - [ ] **Prazna polja u politici privatnosti** (`src/pages/privacy.html`, `src/pages/hr/privatnost.html`):
       ime voditelja obrade i ostala označena polja, te provjera popisa obrađivača.
 - [ ] **Domena** u `tools/build.py` (`SITE`, komentar `DOMAIN:`): canonical, hreflang, sitemap, robots i og:image.
-- [ ] **Formspree račun i FORM_ENDPOINT** (vidi "The free check form"): dok je prazan, obrazac otvara WhatsApp.
+- [x] **Formspree račun i FORM_ENDPOINT** (vidi "The free check form"): upisan `https://formspree.io/f/mnpprlyv`.
+      Provjeriti: prvi upis s live stranice potvrditi u Formspreeu i da upiti stižu na pravi e-mail.
 - [ ] **Maknuti noindex**: `<meta name="robots" content="noindex, nofollow">` u `src/layout.html` i
       zaglavlje `X-Robots-Tag` u `vercel.json`.
 

@@ -30,7 +30,7 @@ WAVES = 'all-black'
 # The free check form (src/partials/form-en.html, form-hr.html; marker <!--#form--> in a page).
 #   ''                      the button opens WhatsApp with the two fields as a ready message (now)
 #   'https://formspree.io/f/xxxxxxxx'   the form is POSTed there (fields site, contact, language, page)
-FORM_ENDPOINT = ''
+FORM_ENDPOINT = 'https://formspree.io/f/mnpprlyv'
 
 
 def long_read(route):
