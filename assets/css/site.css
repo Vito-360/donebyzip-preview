@@ -266,3 +266,19 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 .kw{color:var(--color-fg);font-weight:700}
 /* landing pages: the four short steps inside the "How it works" card */
 .zl-steps{margin-top:0}
+/* ---- /how-it-works/ and /hr/kako-radi/ (also used by /faq/) ---- */
+.zhw-head{padding-top:clamp(8rem,16vw,11rem)}
+.zhw-head-in{display:grid;gap:1.1rem;max-width:46rem}
+.zhw-lede{max-width:40ch;font-size:clamp(1.0625rem,1.6vw,1.25rem)}
+.zhw-h{max-width:36rem}
+.zhw-list{display:grid;gap:1rem;max-width:46rem;margin-top:1.75rem;color:var(--color-fg-2);font-size:1.0625rem;line-height:1.6}
+.zhw-list>li{display:grid;grid-template-columns:1.1rem 1fr;gap:.55rem}
+.zhw-list>li:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--color-fg-3);margin-top:.68em}
+.zhw-sub{display:grid;gap:.55rem;margin-top:.7rem}
+.zhw-sub>li{display:grid;grid-template-columns:1rem 1fr;gap:.45rem}
+.zhw-sub>li:before{content:"";width:.55rem;height:1px;background:var(--color-fg-3);margin-top:.8em}
+.zhw-link{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.25em}
+.zhw-link:hover{text-decoration-thickness:2px}
+/* "The full process →" / "All questions →" */
+.zh-more{display:inline-flex;align-items:center;gap:.45rem;min-height:2.75rem;margin-top:1rem;color:var(--color-fg);font-size:1rem;font-weight:500;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
+.zh-more:hover{text-decoration-thickness:2px}

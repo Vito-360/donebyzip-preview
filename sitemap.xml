@@ -97,6 +97,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://donebyzip-preview.vercel.app/blog/why-posting-every-day-doesnt-help/"/>
   </url>
   <url>
+    <loc>https://donebyzip-preview.vercel.app/how-it-works/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://donebyzip-preview.vercel.app/how-it-works/"/>
+    <xhtml:link rel="alternate" hreflang="hr" href="https://donebyzip-preview.vercel.app/hr/kako-radi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://donebyzip-preview.vercel.app/how-it-works/"/>
+  </url>
+  <url>
     <loc>https://donebyzip-preview.vercel.app/privacy/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://donebyzip-preview.vercel.app/privacy/"/>
     <xhtml:link rel="alternate" hreflang="hr" href="https://donebyzip-preview.vercel.app/hr/privatnost/"/>
@@ -221,6 +227,12 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://donebyzip-preview.vercel.app/small-business-websites/"/>
     <xhtml:link rel="alternate" hreflang="hr" href="https://donebyzip-preview.vercel.app/hr/izrada-web-stranica/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://donebyzip-preview.vercel.app/small-business-websites/"/>
+  </url>
+  <url>
+    <loc>https://donebyzip-preview.vercel.app/hr/kako-radi/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://donebyzip-preview.vercel.app/how-it-works/"/>
+    <xhtml:link rel="alternate" hreflang="hr" href="https://donebyzip-preview.vercel.app/hr/kako-radi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://donebyzip-preview.vercel.app/how-it-works/"/>
   </url>
   <url>
     <loc>https://donebyzip-preview.vercel.app/hr/privatnost/</loc>
