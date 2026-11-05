@@ -14,7 +14,7 @@ Static site, no framework, no build step on Vercel. Every page is a real HTML fi
 | `<head>`, tags shared by every page | `src/layout.html` |
 | Styles (compiled Tailwind + a few own rules at the end) | `assets/css/site.css` |
 | Behaviour: menu, FAQ, popups, collage, form, WhatsApp pill | `assets/js/site.js` |
-| Images, fonts | `assets/img/`, `assets/fonts/` (Geist, woff2) |
+| Images, fonts | `assets/img/`, `assets/fonts/` (Bricolage Grotesque, woff2, OFL) |
 | Domain used in canonical, hreflang, sitemap | `SITE` at the top of `tools/build.py` (comment `DOMAIN:`) |
 
 Do not edit `index.html`, `*/index.html`, `sitemap.xml` or `robots.txt` by hand: they are generated.
