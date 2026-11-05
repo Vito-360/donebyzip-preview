@@ -373,3 +373,6 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
   .zh-hero .zh-actions{order:4;margin-top:.15rem}
   .zh-hero .zs{order:5;margin-top:1rem}
 }
+/* Home, work: 4 cards (Studio Amage, Apartments Grbić, Look Longer, Your business): 4 in a row on a
+   computer (from 1024 px), 2 in a row on tablets and phones. */
+@media (min-width:64rem){.zp-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:2rem 1.25rem}}
