@@ -14,6 +14,10 @@ src/data/prices.json     prices; {{price:key}} in a page becomes "from € X" / 
 import glob, json, os, re, sys
 
 SITE = 'https://donebyzip-preview.vercel.app'  # DOMAIN: change to the real domain at launch
+OG_ALT = {
+    'en': 'zip. — People search for you. They find someone else.',
+    'hr': 'zip. — Ljudi vas traže. Pronađu nekoga drugog.',
+}  # the share images are assets/og/og-<lang>.jpg (tools/make-og.js)
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'src')
 
@@ -108,7 +112,8 @@ def build():
         page = layout
         for k, v in (('lang', p['lang']), ('title', p['title']), ('description', p['description']),
                      ('canonical', SITE + url_path(p['route'])), ('alternates', alternates),
-                     ('hash_redirect', hash_redirect), ('app_data', app_data), ('content', body)):
+                     ('hash_redirect', hash_redirect),
+                     ('og_image', '%s/assets/og/og-%s.jpg' % (SITE, p['lang'])), ('og_alt', OG_ALT[p['lang']]), ('app_data', app_data), ('content', body)):
             page = page.replace('{{%s}}' % k, v)
         left = re.findall(r'\{\{\w+\}\}', page)
         if left:

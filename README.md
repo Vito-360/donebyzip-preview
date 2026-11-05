@@ -56,6 +56,12 @@ All prices are in **`src/data/prices.json`**, one entry per package or add-on:
 
 Then run `python3 tools/build.py`.
 
+## Share images (og:image)
+
+`assets/og/og-en.jpg` (every EN page) and `assets/og/og-hr.jpg` (every HR page), 1200 × 630.
+They are made from HTML by `node tools/make-og.js` (needs Playwright + Chromium; change the headline
+in that file). The alt text is `OG_ALT` in `tools/build.py`.
+
 ## Building
 
 ```bash
@@ -85,3 +91,15 @@ small script at the top of every page.
 
 `vercel.json` still sends `X-Robots-Tag: noindex, nofollow` and every page has
 `<meta name="robots" content="noindex, nofollow">`: remove both when the site goes live.
+
+## Prije objave
+
+- [ ] **Cijene** u `src/data/prices.json` (sada su sve prazne; vidi "Prices" gore).
+- [ ] **Slika glavnog lika** u heru: `assets/img/hero-character.webp`, 900 × 1100, WebP (vidi "Hero image").
+- [ ] **Prije/poslije koncepti**: sekcija još ne postoji, dodaje se na početnu kad budu gotovi.
+- [ ] **Prazna polja u politici privatnosti** (`src/pages/privacy.html`, `src/pages/hr/privatnost.html`):
+      ime voditelja obrade i ostala označena polja, te provjera popisa obrađivača.
+- [ ] **Domena** u `tools/build.py` (`SITE`, komentar `DOMAIN:`): canonical, hreflang, sitemap, robots i og:image.
+- [ ] **Maknuti noindex**: `<meta name="robots" content="noindex, nofollow">` u `src/layout.html` i
+      zaglavlje `X-Robots-Tag` u `vercel.json`.
+
