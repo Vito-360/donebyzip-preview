@@ -24,6 +24,20 @@
       });
     }
 
+    /* Services dropdown in the header: click / Enter / Space toggles, Esc closes and returns focus,
+       a click or focus outside closes it. */
+    $$(".zn-dd").forEach((dd) => {
+      const ddBtn = dd.querySelector(".zn-dd-btn");
+      const ddPanel = dd.querySelector(".zn-dd-panel");
+      const setDd = (open) => { ddBtn.setAttribute("aria-expanded", open); ddPanel.hidden = !open; };
+      ddBtn.addEventListener("click", () => setDd(ddBtn.getAttribute("aria-expanded") !== "true"));
+      dd.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && ddBtn.getAttribute("aria-expanded") === "true") { setDd(false); ddBtn.focus(); }
+      });
+      dd.addEventListener("focusout", (e) => { if (!dd.contains(e.relatedTarget)) setDd(false); });
+      document.addEventListener("pointerdown", (e) => { if (!dd.contains(e.target)) setDd(false); });
+    });
+
     /* FAQ: one open at a time, the open one turns white */
     const accs = $$(".acc");
     const setAcc = (acc, open) => {

@@ -127,3 +127,16 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
   .zh-hero:has(.zh-figure img){padding-bottom:0}
   .zh-hero:has(.zh-figure img) .zh-no-row{z-index:2;bottom:.5rem}
 }
+/* ---- Header: Services dropdown ---- */
+.zn-dd{position:relative;display:flex}
+.zn-dd-btn{display:inline-flex;align-items:center;gap:.35rem;min-height:2.75rem;cursor:pointer}
+.zn-dd-btn[aria-expanded=true]{color:var(--color-fg)}
+.zn-dd-btn svg{transition:transform .2s var(--ease-out)}
+.zn-dd-btn[aria-expanded=true] svg{transform:rotate(180deg)}
+.zn-dd-panel{position:absolute;z-index:60;top:calc(100% + .6rem);left:50%;transform:translateX(-50%);min-width:15rem;display:grid;gap:.15rem;padding:.4rem;background:#141414;border:1px solid var(--color-line-2);border-radius:1rem;box-shadow:0 18px 40px -16px #000}
+.zn-dd-panel[hidden]{display:none}
+.zn-dd-panel a{display:flex;align-items:center;min-height:2.75rem;padding:0 .9rem;border-radius:.65rem;color:var(--color-fg-2);font-size:.9375rem;white-space:nowrap}
+.zn-dd-panel a:hover,.zn-dd-panel a:focus-visible{background:#ffffff12;color:var(--color-fg)}
+@media (prefers-reduced-motion:reduce){.zn-dd-btn svg{transition:none}}
+/* mobile menu: items stack their content (the language item has a small label above it) */
+#nav-menu nav a{flex-direction:column;justify-content:center;align-items:flex-start}
