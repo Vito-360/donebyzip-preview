@@ -64,24 +64,6 @@
       }),
     );
 
-    /* Tilted work tiles: tap straightens one and shows its "Details" link */
-    const tiles = $$(".tile");
-    const UP = "[transform:translateY(-10px)_scale(1.07)]";
-    const DOWN = ["[transform:rotateX(14deg)_rotateZ(var(--rot))]", "[@media(hover:hover)]:hover:[transform:translateY(-6px)_rotateZ(0deg)_scale(1.03)]"];
-    tiles.forEach((tile, i) => {
-      tile.querySelector("button").addEventListener("click", () => {
-        const wasUp = tile.classList.contains(UP);
-        tiles.forEach((t, j) => {
-          const up = t === tile && !wasUp;
-          t.classList.toggle(UP, up);
-          DOWN.forEach((c) => t.classList.toggle(c, !up));
-          t.style.zIndex = up ? 20 : j + 1;
-          t.querySelector("button").setAttribute("aria-pressed", up);
-          t.querySelector("[data-tile-link]").hidden = !up;
-        });
-      });
-    });
-
     /* Sticky WhatsApp pill: after the hero, hidden while another [data-cta] block is on screen */
     const pill = $(".sticky-cta");
     if (pill) {
