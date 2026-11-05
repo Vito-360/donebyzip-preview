@@ -1,8 +1,8 @@
-/* zip — the site's behaviour without React: menu, FAQ, popups, form. Every page is its own HTML file. */
+/* zip — the site's behaviour without React: menu, FAQ, collage, popups, countdown, WhatsApp pill. Every page is its own HTML file. */
 (() => {
   const app = document.getElementById("app");
 
-  function init(root, L) {
+  function init(root) {
     const $ = (s) => root.querySelector(s);
     const $$ = (s) => [...root.querySelectorAll(s)];
 
@@ -68,56 +68,6 @@
       });
     });
 
-    /* Contact: "Rather have a call?" panel on mobile */
-    const callBtn = $('button[aria-controls="call-panel"]');
-    const callPanel = $("#call-panel");
-    if (callBtn && callPanel) {
-      callBtn.onclick = () => {
-        const open = callPanel.classList.contains("hidden");
-        callPanel.classList.toggle("hidden", !open);
-        callPanel.classList.toggle("block", open);
-        callBtn.setAttribute("aria-expanded", open);
-        callBtn.querySelector("span[aria-hidden]")?.classList.toggle("rotate-45", open);
-      };
-    }
-
-    /* Contact form → Formspree */
-    const form = $("#contact form");
-    if (form) {
-      const submit = form.querySelector('button[type="submit"]');
-      const submitLabel = submit.firstChild.textContent;
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        form.querySelectorAll("[data-err]").forEach((x) => x.remove());
-        const data = new FormData(form);
-        const errs = {};
-        for (const k of ["name", "email", "message"]) {
-          const v = String(data.get(k) || "").trim();
-          if (!v) errs[k] = L.required;
-          else if (k === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) errs[k] = L.invalidEmail;
-        }
-        for (const [k, msg] of Object.entries(errs)) {
-          const f = form.querySelector(`[name="${k}"]`);
-          f.setAttribute("aria-invalid", "true");
-          f.insertAdjacentHTML("afterend", `<p data-err id="${k}-error" class="mt-2 text-sm text-fg">${msg}</p>`);
-          f.setAttribute("aria-describedby", `${k}-error`);
-        }
-        const first = Object.keys(errs)[0];
-        if (first) return form.querySelector(`[name="${first}"]`).focus();
-        submit.disabled = true;
-        submit.firstChild.textContent = L.sending;
-        try {
-          const res = await fetch(form.dataset.action, { method: "POST", body: data, headers: { Accept: "application/json" } });
-          if (!res.ok) throw 0;
-          form.outerHTML = `<p role="status" class="mt-5 text-[1.0625rem] leading-relaxed">${L.success}</p>`;
-        } catch {
-          submit.disabled = false;
-          submit.firstChild.textContent = submitLabel;
-          form.insertAdjacentHTML("beforeend", `<p data-err role="alert" class="text-sm text-fg">${L.errorServer}</p>`);
-        }
-      });
-    }
-
     /* Sticky WhatsApp pill: after the hero, hidden while another [data-cta] block is on screen */
     const pill = $(".sticky-cta");
     if (pill) {
@@ -143,12 +93,24 @@
       onScroll();
     }
 
-    /* "A few seconds" ring fills once it scrolls into view */
-    $$(".ring-fill").forEach((c) => {
-      const io = new IntersectionObserver(([e]) => {
-        if (e.isIntersecting) { c.classList.add("is-on"); io.disconnect(); }
-      }, { threshold: 0.6 });
-      io.observe(c.closest("svg"));
+    /* "Trusted" card: 3, 2, 1, 0, one second each; at 0 the warning shows, 2 s pause, then again.
+       Runs only while the card is on screen. With reduced motion it stays "3 s". */
+    $$("[data-countdown]").forEach((el) => {
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const num = el.querySelector(".zh-cd-n");
+      let n = 3, timer = 0, on = false;
+      const draw = () => { num.textContent = n; el.classList.toggle("is-zero", n === 0); };
+      const tick = () => {
+        if (!on) return;
+        n = n === 0 ? 3 : n - 1;
+        draw();
+        timer = setTimeout(tick, n === 0 ? 2000 : 1000);
+      };
+      new IntersectionObserver(([e]) => {
+        clearTimeout(timer);
+        on = e.isIntersecting;
+        if (on) { n = 3; draw(); timer = setTimeout(tick, 1000); }
+      }, { threshold: 0.5 }).observe(el.closest("article") || el);
     });
 
     /* /work: each card opens its <dialog data-work> popup; arrows step through */
@@ -248,8 +210,8 @@
     root.querySelectorAll("[data-refract]").forEach((el) => ro.observe(el));
   }
 
-  /* Page settings (form messages) are data-* on #app. "/work/#grbic-doo" opens that project's popup. */
-  init(app, app.dataset);
+  /* "/work/#grbic-doo" opens that project's popup. */
+  init(app);
   const fromHash = () => { if (location.hash.length > 1) openWork(location.hash.slice(1)); };
   addEventListener("hashchange", fromHash);
   fromHash();

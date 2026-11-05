@@ -19,6 +19,42 @@ Static site, no framework, no build step on Vercel. Every page is a real HTML fi
 
 Do not edit `index.html`, `*/index.html`, `sitemap.xml` or `robots.txt` by hand: they are generated.
 
+## Home page
+
+`src/pages/index.html` (EN) and `src/pages/hr/index.html` (HR), sections 01–07 in order:
+hero, three problems, what the free check looks like, work, packages, questions, WhatsApp.
+
+### Hero image (the main character)
+
+The right column of the hero (below the text on phones) is empty until the image exists, and the
+layout is finished without it. To add it:
+
+1. Save the image as `assets/img/hero-character.webp`, **900 × 1100 px**, WebP.
+2. In both home pages find `<!-- HERO IMAGE: ... -->` and put the image inside the `<figure class="zh-figure">`
+   that follows it:
+   ```html
+   <figure class="zh-figure"><img src="/assets/img/hero-character.webp" width="900" height="1100" alt="…" fetchpriority="high"></figure>
+   ```
+   Write the `alt` in each language.
+3. Run `python3 tools/build.py`. The hero switches to two columns by itself (CSS `:has(img)`).
+
+### Prices
+
+All prices are in **`src/data/prices.json`**, one entry per package or add-on:
+
+```json
+"website":     {"from": null, "monthly": false},
+"maintenance": {"from": 29,   "monthly": true}
+```
+
+- `from`: amount in euros as a number (`790`, `1200`, `49.5`), or `null`.
+- `null` shows "Price in writing after the free check" / "Cijena napismeno nakon besplatne provjere".
+- A number shows "from € 1,200" / "od 1.200 €"; with `"monthly": true` it adds "/mo" / "/mj".
+- Keys: `website`, `local-seo`, `google-ads`, `meta-ads`, `ai-assistant`, `booking-reminders`,
+  `review-requests`, `maintenance`. In a page, `{{price:key}}` is replaced at build time.
+
+Then run `python3 tools/build.py`.
+
 ## Building
 
 ```bash

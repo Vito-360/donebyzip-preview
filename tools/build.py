@@ -8,6 +8,8 @@ src/layout.html          the document around every page ({{...}} placeholders)
 src/partials/*.html      header-en, header-hr, footer-en, footer-hr ({{alt}} = the other language's page)
 src/pages/**/*.html      one file per page: a <!--page ... --> block with its settings, then its body.
                          <!--#header--> and <!--#footer--> mark where the partials go.
+src/data/prices.json     prices; {{price:key}} in a page becomes "from € X" / "od X €" or, if empty,
+                         "Price in writing after the free check".
 """
 import glob, json, os, re, sys
 
@@ -26,6 +28,27 @@ def url_path(route):
 
 def out_file(route):
     return 'index.html' if route == '/' else route.strip('/') + '/index.html'
+
+
+PRICE_TEXT = {
+    'en': dict(empty='Price in writing after the free check', fmt='from € {n}', mo='/mo'),
+    'hr': dict(empty='Cijena napismeno nakon besplatne provjere', fmt='od {n} €', mo='/mj'),
+}
+
+
+def price(prices, key, lang, src):
+    if key not in prices:
+        sys.exit('%s: {{price:%s}} is not in src/data/prices.json' % (src, key))
+    p, t = prices[key], PRICE_TEXT[lang]
+    amount = p.get('from')
+    if amount in (None, ''):
+        return t['empty']
+    if not isinstance(amount, (int, float)) or amount <= 0:
+        sys.exit('src/data/prices.json: "%s" from must be a number of euros or null' % key)
+    n = ('{:,.0f}' if float(amount).is_integer() else '{:,.2f}').format(amount)
+    if lang == 'hr':  # 1.200 / 1.234,50
+        n = n.replace(',', ' ').replace('.', ',').replace(' ', '.')
+    return t['fmt'].format(n=n) + (t['mo'] if p.get('monthly') else '')
 
 
 def load_pages():
@@ -47,6 +70,7 @@ def build():
     partial = {os.path.basename(p)[:-5]: read(p).rstrip('\n')
                for p in glob.glob(os.path.join(SRC, 'partials', '*.html'))}
     pages = load_pages()
+    prices = json.load(open(os.path.join(SRC, 'data', 'prices.json'), encoding='utf-8'))
     by_path = {url_path(p['route']): p for p in pages}
     routes = [p['route'] for p in pages]
 
@@ -72,6 +96,7 @@ def build():
             if body.count(marker) != 1:
                 sys.exit('%s: needs exactly one %s' % (p['src'], marker))
             body = body.replace(marker, partial['%s-%s' % (kind, p['lang'])].replace('{{alt}}', p['alt']))
+        body = re.sub(r'\{\{price:([a-z0-9-]+)\}\}', lambda m: price(prices, m.group(1), p['lang'], p['src']), body)
         app_data = ''.join(' data-%s="%s"' % (k, p[k]) for k in
                            ('required', 'invalidemail', 'sending', 'success', 'errorserver'))
         page = layout
