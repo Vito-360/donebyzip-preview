@@ -185,8 +185,8 @@
     );
 
     /* Sticky "Free check" button (every page, under 768 px; markup in the footer partials): shows after the
-       first screen, hidden while a [data-cta] block is on screen: section 07, the footer, "Your business"
-       (but never while its box is open). It opens a small box: role="dialog", focus moves into it and back
+       first screen, hidden while a [data-cta] block, a form or a section's main (pink) button is on screen:
+       the hero form, section 07, the footer, "Your business", the packages (but never while its box is open). It opens a small box: role="dialog", focus moves into it and back
        to the button; closes with X, Esc or a click outside. */
     const pill = $(".sticky-cta");
     const box = $("#zc-box");
@@ -237,7 +237,8 @@
         (es) => { es.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target))); sync(); },
         { threshold: 0, rootMargin: "0px 0px -80px 0px" },
       );
-      $$("[data-cta]").forEach((el) => io.observe(el));
+      // hidden while a form, a [data-cta] block or a section's main button (pink, .btn-primary) is on screen
+      $$("[data-cta], .zf-form, #app .btn-primary:not(header .btn-primary)").forEach((el) => io.observe(el));
       onScroll();
     }
 

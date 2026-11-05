@@ -380,3 +380,17 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 .zh-price:empty{display:none}
 .zh-pk-note{margin-top:1.75rem;color:var(--color-fg);font-size:1.0625rem;font-weight:600;letter-spacing:-.01em}
 .zh-pk-note+.zh-pk-foot{margin-top:.5rem}
+/* Header menu button: a visible word next to the icon (the button's name is that word) */
+.zn-menu{display:inline-flex;align-items:center;gap:.6rem;min-height:2.75rem;padding:0 .75rem 0 .9rem;border-radius:999px;color:var(--color-fg);font-size:.9375rem;font-weight:500;letter-spacing:-.01em}
+.zn-menu-i{display:grid;place-content:center;gap:4px}
+@media (min-width:48rem){.zn-menu{display:none}}
+/* Phones: the header is a solid black bar, so it never sits over the content */
+@media (max-width:47.99rem){.zn-head{background:#000;padding-bottom:8px}}
+/* Phones: room under every section for the sticky button, so it never covers a heading at the end of one */
+@media (max-width:47.99rem){
+  .zh-sec{padding-bottom:calc(var(--pad) + 4.5rem)}
+  main#main.pb-20{padding-bottom:calc(5rem + 4.5rem)}
+}
+/* Steps: one line under 02 Demo */
+.zh-steps .zh-step-dl>span:last-child{display:grid;gap:.15rem}
+.zh-step-d{color:var(--color-fg-3);font-size:.8125rem;line-height:1.4;max-width:24ch}
