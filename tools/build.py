@@ -18,6 +18,20 @@ OG_ALT = {
     'en': 'zip. — People search for you. They find someone else.',
     'hr': 'zip. — Ljudi vas traže. Pronađu nekoga drugog.',
 }  # the share images are assets/og/og-<lang>.jpg (tools/make-og.js)
+# Wavy lines (waves() below). One switch:
+#   'all-black'  behind every black (#000) area on every page, as one continuous layer (no seams between
+#                neighbouring black sections). #141414 sections and cards cover it. On long-read pages
+#                (LONG_READ) only behind the page header (title and subtitle), never behind the text.
+#   'hero'       only where a page has <!--#waves--> (home hero and section 07; the closing CTA on
+#                How it works and FAQ).
+WAVES = 'all-black'
+
+
+def long_read(route):
+    """Blog articles and the privacy policy: waves only behind their header."""
+    return route.startswith(('/blog/', '/hr/blog/')) or route in ('/privacy', '/hr/privatnost')
+
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'src')
 
@@ -147,12 +161,29 @@ def build():
             body = body.replace(marker, part)
         body = re.sub(r'\{\{price-sentence:([a-z0-9-]+)\}\}', lambda m: price_sentence(prices, m.group(1), p['lang'], p['src']), body)
         body = re.sub(r'\{\{price:([a-z0-9-]+)\}\}', lambda m: price(prices, m.group(1), p['lang'], p['src']), body)
-        n_waves = iter(range(1, 100))
-        body = re.sub(r'<!--#waves-->', lambda m: waves(next(n_waves)), body)
+        app_attr = ''
+        if WAVES == 'hero':
+            n_waves = iter(range(1, 100))
+            body = re.sub(r'<!--#waves-->', lambda m: waves(next(n_waves)), body)
+        elif WAVES == 'all-black':
+            body = body.replace('<!--#waves-->', '')
+            if long_read(p['route']):
+                m = re.compile(r'<header(?![^>]*\bclass=)([^>]*)>').search(body, body.index('<main'))
+                if not m:
+                    sys.exit('%s: long-read page needs a <header> (title and subtitle) inside <main>' % p['src'])
+                body = body[:m.start()] + '<header class="zw-head"%s>' % m.group(1) + waves('head') + body[m.end():]
+                if body.count('<main id="main" class="') != 1:
+                    sys.exit('%s: long-read page needs <main id="main" class="...">' % p['src'])
+                body = body.replace('<main id="main" class="', '<main id="main" class="zw-clip ')
+            else:
+                app_attr = ' class="zw-all"'
+                body = waves('page') + body
+        else:
+            sys.exit('tools/build.py: WAVES must be "all-black" or "hero"')
         page = layout
         for k, v in (('lang', p['lang']), ('title', p['title']), ('description', p['description']),
                      ('canonical', SITE + url_path(p['route'])), ('alternates', alternates),
-                     ('hash_redirect', hash_redirect),
+                     ('hash_redirect', hash_redirect), ('app_attr', app_attr),
                      ('og_image', '%s/assets/og/og-%s.jpg' % (SITE, p['lang'])), ('og_alt', OG_ALT[p['lang']]), ('content', body)):
             page = page.replace('{{%s}}' % k, v)
         left = re.findall(r'\{\{\w+\}\}', page)

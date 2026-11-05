@@ -309,3 +309,18 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
   .zh-hero-copy{gap:1rem}
   .zs-phone{font-size:12.5px}
 }
+/* Waves on every black area (WAVES = 'all-black' in tools/build.py). One layer behind the whole page, so the
+   lines run on without a seam from one black section into the next; black sections are transparent over it,
+   #141414 sections and cards are opaque and cover it. The FAQ boxes in black sections get the same colour
+   they have on black, but opaque, so no line runs behind the questions. */
+.zw-all{position:relative;z-index:0}
+.zw-all>.zw-waves{z-index:-1}
+.zw-all .band{background:transparent}
+.zw-all .band .acc{background:#0e0e10}
+/* Long-read pages (blog articles, privacy): waves only behind the header, fading out under the subtitle.
+   The header sits in a narrow column, so the layer reaches far to both sides; <main> (class zw-clip, full width) cuts it at the screen edge. */
+.zw-clip{overflow:hidden;overflow:clip}
+.zw-head{position:relative;isolation:isolate}
+.zw-head>.zw-waves{z-index:-1;inset:auto;top:-12rem;left:-100vw;width:300vw;height:calc(100% + 12rem);-webkit-mask-image:linear-gradient(#000 calc(100% - 4rem),#0000);mask-image:linear-gradient(#000 calc(100% - 4rem),#0000)}
+/* the hairline above the certificate strip would read as a seam across the waves */
+.zw-all .zh-certs{border-top:0}

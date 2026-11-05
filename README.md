@@ -27,10 +27,27 @@ hero, three problems, what the free check looks like, work, packages, questions,
 
 ### Hero
 
-No photo in the hero (decision after review, Nov 2026). Behind the hero and section 07 are soft wavy lines:
-an inline SVG made by `waves()` in `tools/build.py` (marker `<!--#waves-->` in the page), #1a1a1a, 1.25 px, static.
-It is a repeating pattern in real pixels (one wave period wide, two lines high), so the waves look the same at
-every width and are never stretched.
+No photo in the hero (decision after review, Nov 2026). Soft wavy lines instead: an inline SVG made by
+`waves()` in `tools/build.py`, #1a1a1a, 1.25 px, static. It is a repeating pattern in real pixels (one wave
+period wide, two lines high), so the waves look the same at every width and are never stretched.
+
+### Waves: where they go (one setting)
+
+`WAVES` at the top of `tools/build.py`:
+
+- **`'all-black'`** (now, on trial): behind every black (#000) area on every page. It is one layer behind the
+  whole page (`<div id="app" class="zw-all">`), so the lines run on without a seam where two black sections
+  meet; black sections are transparent over it, #141414 sections and cards cover it. Exception, long-read
+  pages (`long_read()` in `build.py`: blog articles EN/HR, `/privacy/`, `/hr/privatnost/`): waves only behind
+  the page header (title and subtitle), fading out before the text. CSS: the `zw-all`, `zw-head`, `zw-clip`
+  rules at the end of `assets/css/site.css`.
+- **`'hero'`**: only where a page has the marker `<!--#waves-->`: the home hero and section 07 (EN and HR),
+  and the closing "Send us your website" block on How it works and FAQ.
+
+To go back to the hero and section 07 only: set `WAVES = 'hero'` in `tools/build.py`, then run
+`python3 tools/build.py` and commit. Nothing else needs to change (the `zw-all`/`zw-head` CSS is then unused).
+If the closing block on How it works and FAQ should not have waves either, delete `<!--#waves-->` from
+`src/pages/how-it-works.html`, `faq.html`, `hr/kako-radi.html` and `hr/pitanja.html`.
 
 The character-on-photo tool is kept for later: `tools/compose-hero.py` with its sources in `src/images/`
 (not deployed). It writes `assets/img/hero-character.webp`; to use it again, put an `<img>` back in the hero.

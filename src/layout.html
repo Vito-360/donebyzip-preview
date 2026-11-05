@@ -33,7 +33,7 @@
 <body>
 <!-- Zipper intro in the hero: first visit per session only (add ?zip to the address to replay it) -->
 <script>document.documentElement.classList.add("js");try{var s=sessionStorage,d=document.documentElement;if((!s.getItem("zz")||location.search.indexOf("zip")>-1)&&!matchMedia("(prefers-reduced-motion: reduce)").matches){d.dataset.zz="run";setTimeout(function(){delete d.dataset.zz},2600)}s.setItem("zz","1")}catch(e){}</script>
-<div id="app">{{content}}</div>
+<div id="app"{{app_attr}}>{{content}}</div>
 <script src="/assets/js/site.js"></script>
 </body>
 </html>
