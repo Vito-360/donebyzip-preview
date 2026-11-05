@@ -105,8 +105,7 @@ a.chip{min-height:2.75rem}
 .zh-small{display:flex;flex-wrap:wrap;align-items:center;gap:0 .75rem;color:var(--color-fg-3);font-size:.875rem}
 .zh-small a{display:inline-flex;align-items:center;min-height:2.75rem;color:var(--color-fg-2);text-decoration:underline;text-underline-offset:.25em}
 .zh-small a:hover{color:var(--color-fg)}
-/* sticky WhatsApp pill (phones) */
-.zh-pill{background:var(--color-cta);color:#000;box-shadow:0 6px 18px -6px #000c}
+
 /* ---- /work, /hr/radovi ---- */
 .zw-cards{margin-top:clamp(3rem,6vw,5rem);padding-block:clamp(3.5rem,7vw,6rem)}
 /* footer without its CTA block (footer_cta: off) */
@@ -156,3 +155,23 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
   .zp-item{flex:0 0 82%;scroll-snap-align:start}
 }
 @media (prefers-reduced-motion:reduce){.zp-shot img{transition:none}}
+/* ---- Sticky "Free check" button and its box (home) ---- */
+.zc{position:fixed;z-index:55;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:0 1rem calc(env(safe-area-inset-bottom,0px) + 14px);pointer-events:none}
+@media (min-width:48rem){.zc{left:auto;right:1.5rem;bottom:1.5rem;padding:0}}
+.zc-btn{pointer-events:auto;display:inline-flex;align-items:center;gap:.6rem;min-height:3.25rem;padding:0 1.4rem 0 1.2rem;border-radius:999px;background:var(--color-cta);color:#000;font-size:1rem;font-weight:600;letter-spacing:-.01em;box-shadow:0 12px 28px -12px #000;cursor:pointer}
+.zc-btn[data-show=false]{pointer-events:none}
+@media (hover:hover) and (pointer:fine){.zc-btn:hover{background:#ff66a5}}
+.zc-box{pointer-events:auto;position:fixed;z-index:56;left:.75rem;right:.75rem;bottom:calc(env(safe-area-inset-bottom,0px) + .75rem);display:grid;gap:.85rem;padding:1.5rem 1.25rem 1.25rem;background:#141414;border:1px solid var(--color-line-2);border-radius:1.25rem;box-shadow:0 24px 60px -20px #000;animation:zc-in .22s var(--ease-out)}
+.zc-box[hidden]{display:none}
+.zc-box:focus{outline:none}
+@media (min-width:48rem){.zc-box{left:auto;right:1.5rem;bottom:calc(1.5rem + 3.25rem + .75rem);width:23rem}}
+@keyframes zc-in{from{opacity:0;transform:translateY(12px)}}
+.zc-x{position:absolute;top:.4rem;right:.4rem;width:2.75rem;height:2.75rem;display:grid;place-items:center;border-radius:999px;color:var(--color-fg-2);cursor:pointer}
+.zc-x:hover{color:var(--color-fg);background:#ffffff12}
+.zc-title{padding-right:2.75rem;color:var(--color-fg);font-size:1.25rem;line-height:1.2;font-weight:800;letter-spacing:-.03em}
+.zc-text{color:var(--color-fg-2);font-size:1rem;line-height:1.55}
+.zc-open{width:100%}
+.zc-small{display:flex;flex-wrap:wrap;gap:0 1rem;font-size:.875rem}
+.zc-small a{display:inline-flex;align-items:center;min-height:2.75rem;color:var(--color-fg-3);text-decoration:underline;text-underline-offset:.25em}
+.zc-small a:hover{color:var(--color-fg-2)}
+@media (prefers-reduced-motion:reduce){.zc-box{animation:none}}

@@ -64,17 +64,48 @@
       }),
     );
 
-    /* Sticky WhatsApp pill: after the hero, hidden while another [data-cta] block is on screen */
+    /* Sticky "Free check" button: shows after the hero, hidden while another [data-cta] block is on screen
+       (but never while its box is open). It opens a small box: role="dialog", focus moves into it and back
+       to the button; closes with X, Esc or a click outside. */
     const pill = $(".sticky-cta");
-    if (pill) {
+    const box = $("#zc-box");
+    if (pill && box) {
       let pastHero = false;
       const visible = new Set();
+      const isOpen = () => !box.hidden;
       const sync = () => {
-        const s = pastHero && visible.size === 0;
+        const s = (pastHero && visible.size === 0) || isOpen();
         pill.dataset.show = s;
         pill.setAttribute("aria-hidden", !s);
         pill.tabIndex = s ? 0 : -1;
       };
+      const focusables = () => [...box.querySelectorAll("a[href],button")];
+      const openBox = () => {
+        box.hidden = false;
+        pill.setAttribute("aria-expanded", "true");
+        box.focus();
+        sync();
+      };
+      const closeBox = (refocus = true) => {
+        if (!isOpen()) return;
+        box.hidden = true;
+        pill.setAttribute("aria-expanded", "false");
+        if (refocus) pill.focus({ preventScroll: true });
+        sync();
+      };
+      pill.addEventListener("click", () => (isOpen() ? closeBox() : openBox()));
+      box.querySelector(".zc-x").addEventListener("click", () => closeBox());
+      box.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") { e.preventDefault(); closeBox(); }
+        if (e.key === "Tab") {           // keep Tab inside the box while it is open
+          const f = focusables(), first = f[0], last = f[f.length - 1];
+          if (e.shiftKey && (document.activeElement === first || document.activeElement === box)) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      });
+      document.addEventListener("pointerdown", (e) => {
+        if (isOpen() && !box.contains(e.target) && !pill.contains(e.target)) closeBox();
+      });
       const onScroll = () => {
         if (!root.contains(pill)) return removeEventListener("scroll", onScroll);
         pastHero = scrollY > innerHeight * 0.85;
