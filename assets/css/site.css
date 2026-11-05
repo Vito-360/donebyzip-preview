@@ -109,7 +109,7 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 /* "Your business" card on /work: an empty black panel that stands out on the #141414 band */
 .zw-blank{background:#000;border-color:var(--color-line-2)}
 /* Phones: the hero is not a full screen tall, so section 02 starts close below it; the bottom padding holds the 01. */
-@media (max-width:39.99rem){.zh-hero{min-height:0;align-items:flex-start}}
+
 /* ---- Header: Services dropdown ---- */
 .zn-dd{position:relative;display:flex}
 .zn-dd-btn{display:inline-flex;align-items:center;gap:.35rem;min-height:2.75rem;cursor:pointer}
@@ -186,7 +186,9 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 .zs-meta{color:var(--color-fg-3);font-size:.8125em}
 .zs-btns{display:flex;gap:.4em;margin-top:.35em}
 .zs-btns span{display:inline-flex;align-items:center;height:2.3333em;padding:0 1em;border-radius:999px;background:#1d1d20;border:1px solid var(--color-line-2);color:var(--color-fg-2);font-size:.75em}
-.zs-cap{color:var(--color-fg);font-size:1.125rem;font-weight:600;letter-spacing:-.01em;text-align:center}
+.zs-cap{display:grid;gap:.25rem;text-align:center;max-width:22rem}
+.zs-cap strong{color:var(--color-fg);font-size:1.125rem;font-weight:800;letter-spacing:-.02em}
+.zs-cap span{color:var(--color-fg-2);font-size:.9375rem;line-height:1.45}
 /* start state, only with JS: the query, the results and the line wait for the animation */
 .js .zs:not(.zs-done):not(.zs-typing) .zs-q-t{visibility:hidden}
 .js .zs:not(.zs-done) .zs-r:not(.is-in),.js .zs:not(.zs-done) .zs-cap:not(.is-in){opacity:0;transform:translateY(8px)}
@@ -217,21 +219,33 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 .zy-list li>span:first-child{color:var(--color-fg);font-size:1rem}
 .zy-ask{display:inline-flex;align-items:center;min-height:2.75rem;margin-top:.35rem;color:var(--color-fg);font-size:.9375rem;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
 .zy-ask:hover{text-decoration-thickness:2px}
-/* Phones (< 640 px): a shorter hero. The phone is scaled down as a whole (about 300 px tall), the gaps are
-   tighter and the certificates are a compact block, so section 02 starts at about 1.3 screens. */
-@media (max-width:39.99rem){
-  .zh-hero{padding-top:5.75rem;padding-bottom:calc(var(--zh-no-size) * .8 + 2rem)}
+:root{--zh-no-size:5.5rem}
+/* the sticky button is only for screens under 1024 px; from there on the header's "Free check" is always visible */
+@media (min-width:64rem){.zc{display:none}}
+/* Phones (< 768 px): eyebrow, headline, phone, the two lines, the button, "See the work"; no subtitle (the
+   lines under the phone say the same). Only the top of the phone is shown (search and three results, the
+   rest cut off), at a size where its text is about 10 px or more, at most about 300 px tall. */
+@media (max-width:47.99rem){
+  .zh-hero{min-height:0;align-items:flex-start;padding-top:5.25rem;padding-bottom:calc(var(--zh-no-size) * .8 + 2rem)}
   .zh-hero .zh-no-row{bottom:1rem}
   .zh-hero .zh-no-row .zh-no{font-size:var(--zh-no-size)}
-  .zh-hero-grid{gap:1.75rem}
-  .zh-hero-copy{gap:1.1rem}
-  .zs{gap:.85rem}
-  .zs-phone{font-size:7.6px}
-  .zs-cap{font-size:1.0625rem}
+  .zh-hero-grid{display:flex;flex-direction:column;align-items:stretch;gap:1.1rem}
+  .zh-hero-copy{display:contents}
+  .zh-hero .zh-eyebrow{order:1}
+  .zh-hero .zh-h1{order:2}
+  .zh-hero .zs{order:3;margin-top:.25rem}
+  .zh-hero .zh-actions{order:4;margin-top:.25rem}
+  .zh-hero .zh-sub{display:none}
+  .zs{gap:.9rem}
+  .zs-phone{font-size:12.5px;max-height:300px;overflow:hidden;border-bottom:0;border-radius:2.6em 2.6em 0 0;padding-bottom:0}
+  .zs-phone{width:min(22.5em,100%)}
+  .zs-screen{padding:1.9em .9em 1em;gap:.5em;border-radius:2.1em 2.1em 0 0}
+  .zs-r{display:flex;flex-wrap:wrap;align-items:center;column-gap:.7em;row-gap:.15em;padding:.45em .2em;line-height:1.3}
+  .zs-name,.zs-btns{flex:0 0 100%}
+  .zs-btns{margin-top:.2em}
+  .zs-btns span{font-size:.8em;height:2.2em;padding:0 .95em}
+  .zs-cap strong{font-size:1.0625rem}
   .zh-certs{padding-block:1rem}
   .zh-certs .shell{gap:.4rem}
   .zh-certs ul{gap:.15rem 1rem;font-size:.8125rem;line-height:1.45}
 }
-:root{--zh-no-size:5.5rem}
-/* the sticky button is only for screens under 1024 px; from there on the header's "Free check" is always visible */
-@media (min-width:64rem){.zc{display:none}}
