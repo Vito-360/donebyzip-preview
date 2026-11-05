@@ -91,11 +91,17 @@ def build():
             '<link rel="alternate" hreflang="x-default" href="%s">' % (SITE + url_path(en['route'])),
         ])
         body = p['body']
+        # optional page settings for the footer: "footer_cta: off" drops its CTA block,
+        # "footer_band: band" makes it black instead of Shadow (#141414)
+        footer_cta = p.get('footer_cta', 'on') != 'off'
+        footer_band = p.get('footer_band', 'band-alt')
         for kind in ('header', 'footer'):
             marker = '<!--#%s-->' % kind
             if body.count(marker) != 1:
                 sys.exit('%s: needs exactly one %s' % (p['src'], marker))
-            body = body.replace(marker, partial['%s-%s' % (kind, p['lang'])].replace('{{alt}}', p['alt']))
+            part = partial['%s-%s' % (kind, p['lang'])].replace('{{alt}}', p['alt']).replace('{{footer_band}}', footer_band)
+            part = re.sub(r'<!--if:footer_cta-->(.*?)<!--/if:footer_cta-->', lambda m: m.group(1) if footer_cta else '', part, flags=re.S)
+            body = body.replace(marker, part)
         body = re.sub(r'\{\{price:([a-z0-9-]+)\}\}', lambda m: price(prices, m.group(1), p['lang'], p['src']), body)
         app_data = ''.join(' data-%s="%s"' % (k, p[k]) for k in
                            ('required', 'invalidemail', 'sending', 'success', 'errorserver'))

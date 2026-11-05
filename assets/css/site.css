@@ -112,3 +112,7 @@ a.chip{min-height:2.75rem}
 .zh-small a:hover{color:var(--color-fg)}
 /* sticky WhatsApp pill (phones) */
 .zh-pill{background:var(--color-cta);color:#000;box-shadow:0 6px 18px -6px #000c}
+/* ---- /work, /hr/radovi ---- */
+.zw-cards{margin-top:clamp(3rem,6vw,5rem);padding-block:clamp(3.5rem,7vw,6rem)}
+/* footer without its CTA block (footer_cta: off) */
+footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}

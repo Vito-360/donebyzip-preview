@@ -12,6 +12,7 @@ Static site, no framework, no build step on Vercel. Every page is a real HTML fi
 | Page title, description, form messages, the other-language page | the `<!--page … -->` block at the top of that file |
 | Header / footer (one copy per language) | `src/partials/header-en.html`, `header-hr.html`, `footer-en.html`, `footer-hr.html` |
 | `<head>`, tags shared by every page | `src/layout.html` |
+| Footer options for one page | in its `<!--page … -->` block: `footer_cta: off` (no CTA block), `footer_band: band` (black instead of #141414) |
 | Styles (compiled Tailwind + a few own rules at the end) | `assets/css/site.css` |
 | Behaviour: menu, FAQ, popups, collage, form, WhatsApp pill | `assets/js/site.js` |
 | Images, fonts | `assets/img/`, `assets/fonts/` (Bricolage Grotesque, woff2, OFL) |
