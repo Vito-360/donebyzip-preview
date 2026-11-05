@@ -82,6 +82,18 @@ def waves(uid, length=760.0, spacing=96.0, amp=24.0):
             % (pid, length, tile_h, line(spacing / 2, 0.0), line(spacing * 1.5, 0.75), pid))
 
 
+PRICE_NAME = {'website': {'en': 'Website', 'hr': 'Web stranica'}}
+
+
+def price_sentence(prices, key, lang, src):
+    """For FAQ answers: nothing while the price is empty, else " Website: from € 790." """
+    p = prices.get(key) or {}
+    if p.get('from') in (None, ''):
+        return ''
+    name = PRICE_NAME.get(key, {}).get(lang, key)
+    return ' %s: %s.' % (name, price(prices, key, lang, src))
+
+
 def load_pages():
     pages = []
     for path in sorted(glob.glob(os.path.join(SRC, 'pages', '**', '*.html'), recursive=True)):
@@ -133,6 +145,7 @@ def build():
             part = partial['%s-%s' % (kind, p['lang'])].replace('{{alt}}', p['alt']).replace('{{footer_band}}', footer_band)
             part = re.sub(r'<!--if:footer_cta-->(.*?)<!--/if:footer_cta-->', lambda m: m.group(1) if footer_cta else '', part, flags=re.S)
             body = body.replace(marker, part)
+        body = re.sub(r'\{\{price-sentence:([a-z0-9-]+)\}\}', lambda m: price_sentence(prices, m.group(1), p['lang'], p['src']), body)
         body = re.sub(r'\{\{price:([a-z0-9-]+)\}\}', lambda m: price(prices, m.group(1), p['lang'], p['src']), body)
         n_waves = iter(range(1, 100))
         body = re.sub(r'<!--#waves-->', lambda m: waves(next(n_waves)), body)
