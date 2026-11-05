@@ -29,6 +29,8 @@ hero, three problems, what the free check looks like, work, packages, questions,
 
 No photo in the hero (decision after review, Nov 2026). Behind the hero and section 07 are soft wavy lines:
 an inline SVG made by `waves()` in `tools/build.py` (marker `<!--#waves-->` in the page), #1a1a1a, 1.25 px, static.
+It is a repeating pattern in real pixels (one wave period wide, two lines high), so the waves look the same at
+every width and are never stretched.
 
 The character-on-photo tool is kept for later: `tools/compose-hero.py` with its sources in `src/images/`
 (not deployed). It writes `assets/img/hero-character.webp`; to use it again, put an `<img>` back in the hero.
