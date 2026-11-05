@@ -258,3 +258,7 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 .zh-certs ul{flex-basis:100%;column-gap:1.15rem}
 /* wide screens: one row, a thin vertical line between the certificates and the promises */
 @media (min-width:80rem){.zh-certs ul{flex-basis:auto}.zh-certs .shell{column-gap:1.5rem}.zh-certs .zh-certs-p{border-left:1px solid var(--color-line-2);padding-left:1.5rem}}
+/* "Prefer a call? Book 15 minutes." — a quiet outlined button (not the CTA colour), opens Cal.com in a new tab */
+.zk-call{display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0 1.25rem;border:1px solid var(--color-line-2);border-radius:999px;color:var(--color-fg);font-size:.9375rem;font-weight:500;text-align:center}
+.zk-call:hover{background:#ffffff12}
+.zk-call-full{width:100%}
