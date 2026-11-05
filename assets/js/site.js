@@ -90,11 +90,8 @@
       const status = form.querySelector(".zf-status");
       let tried = false;
       const okSite = (v) => v.trim().length >= 3;
-      const okContact = (v) => {
-        v = v.trim();
-        if (/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(v)) return true;
-        return /^\+?\d{8,15}$/.test(v.replace(/[\s\-().\/]/g, ""));
-      };
+      const isEmail = (v) => /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(v.trim());
+      const okContact = (v) => isEmail(v) || /^\+?\d{8,15}$/.test(v.trim().replace(/[\s\-().\/]/g, ""));
       const check = (input, ok, msg) => {
         const err = document.getElementById(input.getAttribute("aria-describedby"));
         const good = ok(input.value);
@@ -148,7 +145,10 @@
         btn.textContent = d.sending;
         const ctl = new AbortController();
         const timer = setTimeout(() => ctl.abort(), 15000);
-        fetch(d.endpoint, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" }, signal: ctl.signal })
+        // an email in "contact" also goes as _replyto, so "Reply" in Formspree's email goes to the client
+        const body = new FormData(form);
+        if (isEmail(contact.value)) body.append("_replyto", contact.value.trim());
+        fetch(d.endpoint, { method: "POST", body, headers: { Accept: "application/json" }, signal: ctl.signal })
           .then((r) => { if (!r.ok) throw new Error(r.status); thanks(); })
           .catch(() => { btn.disabled = false; btn.textContent = label; fail(); })
           .finally(() => clearTimeout(timer));
