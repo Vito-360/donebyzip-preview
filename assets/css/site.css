@@ -291,3 +291,21 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 .zq-group{--pad:clamp(3rem,6vw,4.5rem)}
 .zq-in{display:grid;gap:1.25rem;max-width:46rem}
 .zq-h{font-size:clamp(1.375rem,2.4vw,1.75rem)}
+/* low phone screens (height 780 px or less): a smaller search phone (its text not under 9 px) and tighter gaps,
+   so the WhatsApp button stays inside the first screen (e.g. 360 x 740) */
+@media (max-width:47.99rem) and (max-height:780px){
+  .zh-hero{padding-top:4.75rem}
+  .zh-hero-grid{gap:.8rem}
+  .zh-hero .zs,.zh-hero .zh-actions{margin-top:0}
+  .zs{gap:.6rem}
+  .zs-phone{font-size:11.25px;max-height:270px}
+  .zh-h1{font-size:clamp(2.4rem,10.5vw,2.75rem)}
+}
+/* low desktop screens (height 780 px or less): the headline also scales with the screen height, the phone is
+   smaller, so the button stays inside the first screen (e.g. 1280 x 720, 1366 x 650) */
+@media (min-width:48rem) and (max-height:780px){
+  .zh-hero{padding-top:5.5rem}
+  .zh-h1{font-size:clamp(2.75rem,min(8vw,10.5vh),6.5rem)}
+  .zh-hero-copy{gap:1rem}
+  .zs-phone{font-size:12.5px}
+}
