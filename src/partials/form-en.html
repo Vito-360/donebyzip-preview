@@ -1,0 +1,18 @@
+<!-- The free check form (hero and section 07). {{...}} is filled by tools/build.py; FORM_ENDPOINT there decides where it goes. -->
+<form class="zf-form" data-form data-endpoint="{{form_endpoint}}" {{form_action}} novalidate
+ data-wa="https://wa.me/385981834111"
+ data-wa-msg="Hi, I'd like the free check. My website: {site}. Contact: {contact}"
+ data-err-site="Enter your website or business name (at least 3 characters)."
+ data-err-contact="Enter an email address or a phone number (at least 8 digits)."
+ data-sending="Sending…"
+ data-ok="Got it. You'll hear from us within 24 hours."
+ data-fail="Something went wrong." data-fail-link="Message us on WhatsApp instead.">
+<div class="zf-fields">
+<div class="zf-field"><label for="zf-site-{{fid}}">Your website or business name</label><input id="zf-site-{{fid}}" name="site" type="text" placeholder="yourbusiness.hr" autocapitalize="none" spellcheck="false" required minlength="3" aria-describedby="zf-site-{{fid}}-err"><p class="zf-err" id="zf-site-{{fid}}-err" aria-live="polite"></p></div>
+<div class="zf-field"><label for="zf-contact-{{fid}}">Your email or WhatsApp number</label><input id="zf-contact-{{fid}}" name="contact" type="text" autocomplete="email" autocapitalize="none" spellcheck="false" required aria-describedby="zf-contact-{{fid}}-err"><p class="zf-err" id="zf-contact-{{fid}}-err" aria-live="polite"></p></div>
+</div>
+<div class="zf-hp" aria-hidden="true"><label for="zf-hp-{{fid}}">Leave this field empty</label><input id="zf-hp-{{fid}}" name="_gotcha" type="text" tabindex="-1" autocomplete="off"></div>
+<input type="hidden" name="language" value="en"><input type="hidden" name="page" value="{{page}}">
+<div class="zf-actions"><button type="submit" class="btn btn-primary btn-lg zf-btn">Get the free check</button><a class="zf-wa" href="https://wa.me/385981834111?text=Hello!%20I'd%20like%20the%20free%20website%20check.%20My%20site%3A%20" target="_blank" rel="noopener noreferrer">Or message us on WhatsApp</a></div>
+<p class="zf-status" role="status" aria-live="polite"></p>
+</form>

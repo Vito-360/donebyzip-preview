@@ -73,6 +73,29 @@ All prices are in **`src/data/prices.json`**, one entry per package or add-on:
 
 Then run `python3 tools/build.py`.
 
+## The free check form
+
+Hero and section 07 on the home page (EN and HR) have the same form: website or business name, email or
+WhatsApp number, button "Get the free check" / "Besplatna provjera", and a small WhatsApp link under it.
+Markup and all its texts (labels, errors, messages): `src/partials/form-en.html` and `form-hr.html`; in a
+page the marker `<!--#form-->` puts it there. Behaviour: `[data-form]` in `assets/js/site.js`.
+
+Where it sends is one setting, `FORM_ENDPOINT` at the top of `tools/build.py`:
+
+- `''` (now): the button opens WhatsApp with the two fields as a ready message.
+- A Formspree address: the form is sent there (fields `site`, `contact`, `language`, `page`; the hidden
+  `_gotcha` field is the spam trap Formspree knows). After success the form is replaced by
+  "Got it. You'll hear from us within 24 hours."; on an error a WhatsApp link is shown.
+
+To switch it on: make a form at formspree.io (it shows an address like `https://formspree.io/f/abcdwxyz`),
+set its email to the one that should receive the requests, then in `tools/build.py`:
+
+```python
+FORM_ENDPOINT = 'https://formspree.io/f/abcdwxyz'
+```
+
+and run `python3 tools/build.py`. Send one test from the live preview (Formspree confirms the first one).
+
 ## Share images (og:image)
 
 `assets/og/og-en.jpg` (every EN page) and `assets/og/og-hr.jpg` (every HR page), 1200 × 630.
@@ -116,6 +139,7 @@ small script at the top of every page.
 - [ ] **Prazna polja u politici privatnosti** (`src/pages/privacy.html`, `src/pages/hr/privatnost.html`):
       ime voditelja obrade i ostala označena polja, te provjera popisa obrađivača.
 - [ ] **Domena** u `tools/build.py` (`SITE`, komentar `DOMAIN:`): canonical, hreflang, sitemap, robots i og:image.
+- [ ] **Formspree račun i FORM_ENDPOINT** (vidi "The free check form"): dok je prazan, obrazac otvara WhatsApp.
 - [ ] **Maknuti noindex**: `<meta name="robots" content="noindex, nofollow">` u `src/layout.html` i
       zaglavlje `X-Robots-Tag` u `vercel.json`.
 

@@ -77,6 +77,84 @@
       io.observe(zf);
     });
 
+    /* The free check form (hero and section 07; markup in src/partials/form-*.html, texts in its data-*).
+       Field 1: any text of 3+ characters. Field 2: an email, or a number with 8+ digits (may start with +).
+       data-endpoint empty: opens WhatsApp with a ready message. Set (Formspree): POST, then a thank-you
+       message in place of the form, or an error with a WhatsApp link. A filled honeypot (_gotcha) is
+       treated as sent and nothing goes out. */
+    $$("[data-form]").forEach((form) => {
+      const d = form.dataset;
+      const site = form.elements.site;
+      const contact = form.elements.contact;
+      const btn = form.querySelector(".zf-btn");
+      const status = form.querySelector(".zf-status");
+      let tried = false;
+      const okSite = (v) => v.trim().length >= 3;
+      const okContact = (v) => {
+        v = v.trim();
+        if (/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(v)) return true;
+        return /^\+?\d{8,15}$/.test(v.replace(/[\s\-().\/]/g, ""));
+      };
+      const check = (input, ok, msg) => {
+        const err = document.getElementById(input.getAttribute("aria-describedby"));
+        const good = ok(input.value);
+        input.setAttribute("aria-invalid", good ? "false" : "true");
+        if (err.textContent !== (good ? "" : msg)) err.textContent = good ? "" : msg;
+        return good;
+      };
+      const checkSite = () => check(site, okSite, d.errSite);
+      const checkContact = () => check(contact, okContact, d.errContact);
+      site.addEventListener("input", () => { if (tried || site.getAttribute("aria-invalid") === "true") checkSite(); });
+      contact.addEventListener("input", () => { if (tried || contact.getAttribute("aria-invalid") === "true") checkContact(); });
+      site.addEventListener("blur", () => { if (site.value.trim()) checkSite(); });
+      contact.addEventListener("blur", () => { if (contact.value.trim()) checkContact(); });
+      const waUrl = () => d.wa + "?text=" + encodeURIComponent(
+        d.waMsg.replace("{site}", site.value.trim()).replace("{contact}", contact.value.trim()));
+      const thanks = () => {
+        const p = document.createElement("p");
+        p.className = "zf-ok";
+        p.setAttribute("role", "status");
+        p.tabIndex = -1;
+        p.textContent = d.ok;
+        form.replaceWith(p);
+        p.focus();
+      };
+      const fail = () => {
+        status.textContent = d.fail + " ";
+        const a = document.createElement("a");
+        a.href = waUrl();
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.textContent = d.failLink;
+        status.append(a);
+      };
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        tried = true;
+        status.textContent = "";
+        const a = checkSite();
+        const b = checkContact();
+        if (!a || !b) return (a ? contact : site).focus();
+        if (form.elements._gotcha.value) return thanks();
+        if (!d.endpoint) {
+          const url = waUrl();
+          const w = window.open(url, "_blank");
+          if (w) w.opener = null;
+          else location.href = url;
+          return;
+        }
+        const label = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = d.sending;
+        const ctl = new AbortController();
+        const timer = setTimeout(() => ctl.abort(), 15000);
+        fetch(d.endpoint, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" }, signal: ctl.signal })
+          .then((r) => { if (!r.ok) throw new Error(r.status); thanks(); })
+          .catch(() => { btn.disabled = false; btn.textContent = label; fail(); })
+          .finally(() => clearTimeout(timer));
+      });
+    });
+
     /* Services dropdown in the header: click / Enter / Space toggles, Esc closes and returns focus,
        a click or focus outside closes it. */
     $$(".zn-dd").forEach((dd) => {

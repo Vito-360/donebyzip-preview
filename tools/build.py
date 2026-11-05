@@ -11,7 +11,7 @@ src/pages/**/*.html      one file per page: a <!--page ... --> block with its se
 src/data/prices.json     prices; {{price:key}} in a page becomes "from € X" / "od X €" or, if empty,
                          "Price in writing after the free check".
 """
-import glob, json, os, re, sys
+import glob, html, json, os, re, sys
 
 SITE = 'https://donebyzip-preview.vercel.app'  # DOMAIN: change to the real domain at launch
 OG_ALT = {
@@ -26,6 +26,11 @@ OG_ALT = {
 #   'hero'       only where a page has <!--#waves--> (home hero and section 07; the closing CTA on
 #                How it works and FAQ).
 WAVES = 'all-black'
+
+# The free check form (src/partials/form-en.html, form-hr.html; marker <!--#form--> in a page).
+#   ''                      the button opens WhatsApp with the two fields as a ready message (now)
+#   'https://formspree.io/f/xxxxxxxx'   the form is POSTed there (fields site, contact, language, page)
+FORM_ENDPOINT = ''
 
 
 def long_read(route):
@@ -109,6 +114,17 @@ def price_sentence(prices, key, lang, src):
     return ' %s: %s.' % (name, price(prices, key, lang, src))
 
 
+def form(tpl, n, route):
+    """The free check form with its ids made unique on the page (n) and the sending set by FORM_ENDPOINT."""
+    ep = FORM_ENDPOINT.strip()
+    if ep and not ep.startswith('https://'):
+        sys.exit('tools/build.py: FORM_ENDPOINT must be empty or an https:// address')
+    action = ('action="%s" method="post"' % html.escape(ep) if ep
+              else 'action="https://wa.me/385981834111" method="get" target="_blank"')
+    return (tpl.replace('{{fid}}', str(n)).replace('{{form_endpoint}}', html.escape(ep))
+            .replace('{{form_action}}', action).replace('{{page}}', url_path(route)))
+
+
 def load_pages():
     pages = []
     for path in sorted(glob.glob(os.path.join(SRC, 'pages', '**', '*.html'), recursive=True)):
@@ -161,6 +177,8 @@ def build():
             part = partial['%s-%s' % (kind, p['lang'])].replace('{{alt}}', p['alt']).replace('{{footer_band}}', footer_band)
             part = re.sub(r'<!--if:footer_cta-->(.*?)<!--/if:footer_cta-->', lambda m: m.group(1) if footer_cta else '', part, flags=re.S)
             body = body.replace(marker, part)
+        n_forms = iter(range(1, 100))
+        body = re.sub(r'<!--#form-->', lambda m: form(partial['form-' + p['lang']], next(n_forms), p['route']), body)
         body = re.sub(r'\{\{price-sentence:([a-z0-9-]+)\}\}', lambda m: price_sentence(prices, m.group(1), p['lang'], p['src']), body)
         body = re.sub(r'\{\{price:([a-z0-9-]+)\}\}', lambda m: price(prices, m.group(1), p['lang'], p['src']), body)
         app_attr = ''

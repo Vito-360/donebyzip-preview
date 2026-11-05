@@ -335,3 +335,33 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
    (the article text above has none). */
 .zw-foot{isolation:isolate}
 .zw-foot>.zw-waves{z-index:-1;-webkit-mask-image:linear-gradient(#0000,#000 6rem);mask-image:linear-gradient(#0000,#000 6rem)}
+/* The free check form (src/partials/form-*.html, assets/js/site.js [data-form]): hero and section 07.
+   Inputs are opaque (they sit on the waves), 16 px text so iOS does not zoom, 48 px tall; the WhatsApp
+   link is at least 44 px tall. Two fields side by side from 640 px. */
+.zh-formbox{display:block;width:100%}
+.zf-form{display:grid;gap:.9rem;width:100%;max-width:40rem}
+.zf-fields{display:grid;gap:.9rem}
+@media (min-width:40rem){.zf-fields{grid-template-columns:1fr 1fr}}
+.zf-field{display:flex;flex-direction:column;min-width:0}
+.zf-field label{margin-bottom:.4rem;color:var(--color-fg);font-size:.875rem;font-weight:500;letter-spacing:-.005em}
+.zf-field input{width:100%;min-height:3rem;padding:0 1rem;border-radius:14px;border:1px solid var(--color-line-2);background:var(--color-card);color:var(--color-fg);font:inherit;font-size:1rem;letter-spacing:-.01em;transition:border-color .2s ease}
+.zf-field input::placeholder{color:var(--color-fg-3);opacity:1}
+.zf-field input:hover{border-color:#ffffff40}
+.zf-field input:focus{outline:none;border-color:var(--color-fg)}
+.zf-field input:focus-visible{outline:2px solid var(--color-cta);outline-offset:2px}
+.zf-field input[aria-invalid=true]{border-color:#ff8a8a}
+.zf-err{color:#ff8a8a;font-size:.875rem;line-height:1.4}
+.zf-err:not(:empty){margin-top:.4rem}
+.zf-hp{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+.zf-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.5rem;margin-top:.15rem}
+.zf-btn{margin-top:0}
+.zf-btn[disabled]{opacity:.7;cursor:progress}
+.zf-wa{display:inline-flex;align-items:center;min-height:2.75rem;color:var(--color-fg-2);font-size:.9375rem;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
+.zf-wa:hover{color:var(--color-fg)}
+.zf-status{color:var(--color-fg-2);font-size:.9375rem}
+.zf-status:empty{display:none}
+.zf-status a{color:var(--color-fg);text-decoration:underline;text-underline-offset:.25em}
+.zf-ok{width:100%;max-width:40rem;padding:1.1rem 1.25rem;border:1px solid var(--color-line-2);border-radius:18px;background:var(--color-card);color:var(--color-fg);font-size:1.0625rem;font-weight:600;letter-spacing:-.01em}
+.zf-ok:focus{outline:none}
+.zh-final-in .zf-form,.zh-final-in .zf-ok{max-width:44rem}
+@media (max-width:39.99rem){.zf-btn{width:100%}}

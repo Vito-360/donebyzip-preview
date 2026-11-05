@@ -1,0 +1,18 @@
+<!-- Obrazac za besplatnu provjeru (hero i sekcija 07). {{...}} popunjava tools/build.py; FORM_ENDPOINT ondje određuje kamo ide. -->
+<form class="zf-form" data-form data-endpoint="{{form_endpoint}}" {{form_action}} novalidate
+ data-wa="https://wa.me/385981834111"
+ data-wa-msg="Pozdrav, želim besplatnu provjeru. Moja stranica: {site}. Kontakt: {contact}"
+ data-err-site="Upišite stranicu ili ime tvrtke (najmanje 3 znaka)."
+ data-err-contact="Upišite e-mail adresu ili broj telefona (najmanje 8 znamenki)."
+ data-sending="Šaljem…"
+ data-ok="Primili smo. Javljamo se u roku od 24 sata."
+ data-fail="Nešto nije u redu." data-fail-link="Pišite nam na WhatsApp.">
+<div class="zf-fields">
+<div class="zf-field"><label for="zf-site-{{fid}}">Vaša stranica ili ime tvrtke</label><input id="zf-site-{{fid}}" name="site" type="text" placeholder="vasatvrtka.hr" autocapitalize="none" spellcheck="false" required minlength="3" aria-describedby="zf-site-{{fid}}-err"><p class="zf-err" id="zf-site-{{fid}}-err" aria-live="polite"></p></div>
+<div class="zf-field"><label for="zf-contact-{{fid}}">Vaš e-mail ili WhatsApp broj</label><input id="zf-contact-{{fid}}" name="contact" type="text" autocomplete="email" autocapitalize="none" spellcheck="false" required aria-describedby="zf-contact-{{fid}}-err"><p class="zf-err" id="zf-contact-{{fid}}-err" aria-live="polite"></p></div>
+</div>
+<div class="zf-hp" aria-hidden="true"><label for="zf-hp-{{fid}}">Ostavite ovo polje prazno</label><input id="zf-hp-{{fid}}" name="_gotcha" type="text" tabindex="-1" autocomplete="off"></div>
+<input type="hidden" name="language" value="hr"><input type="hidden" name="page" value="{{page}}">
+<div class="zf-actions"><button type="submit" class="btn btn-primary btn-lg zf-btn">Besplatna provjera</button><a class="zf-wa" href="https://wa.me/385981834111?text=Dobar%20dan!%20%C5%BDelim%20besplatnu%20provjeru%20stranice.%20Moja%20stranica%3A%20" target="_blank" rel="noopener noreferrer">Ili nam pišite na WhatsApp</a></div>
+<p class="zf-status" role="status" aria-live="polite"></p>
+</form>
