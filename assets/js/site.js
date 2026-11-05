@@ -91,7 +91,7 @@
       }),
     );
 
-    /* Sticky "Free check" button (every page, under 1024 px; markup in the footer partials): shows after the
+    /* Sticky "Free check" button (every page, under 768 px; markup in the footer partials): shows after the
        first screen, hidden while a [data-cta] block is on screen: section 07, the footer, "Your business"
        (but never while its box is open). It opens a small box: role="dialog", focus moves into it and back
        to the button; closes with X, Esc or a click outside. */

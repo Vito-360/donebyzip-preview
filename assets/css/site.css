@@ -221,8 +221,8 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 .zy-ask{display:inline-flex;align-items:center;min-height:2.75rem;margin-top:.35rem;color:var(--color-fg);font-size:.9375rem;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
 .zy-ask:hover{text-decoration-thickness:2px}
 :root{--zh-no-size:5.5rem}
-/* the sticky button is only for screens under 1024 px; from there on the header's "Free check" is always visible */
-@media (min-width:64rem){.zc{display:none}}
+/* the sticky button is only for screens under 768 px; from there on the header's "Free check" is always visible */
+@media (min-width:48rem){.zc{display:none}}
 /* Phones (< 768 px): eyebrow, headline, phone, the two lines, the button, "See the work"; no subtitle (the
    lines under the phone say the same). Only the top of the phone is shown (search and three results, the
    rest cut off), at a size where its text is about 10 px or more, at most about 300 px tall. */
