@@ -331,3 +331,7 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 .js .zf:not(.zs-done) .zf-res:not(.is-in){opacity:0;transform:translateY(8px)}
 .zf-res{transition:opacity .4s var(--ease-out),transform .4s var(--ease-out)}
 @media (prefers-reduced-motion:reduce){.js .zf .zf-q{visibility:visible}.js .zf .zf-res{opacity:1;transform:none;transition:none}}
+/* Long-read pages: the black footer with the closing CTA has its own wave layer, fading in at the top
+   (the article text above has none). */
+.zw-foot{isolation:isolate}
+.zw-foot>.zw-waves{z-index:-1;-webkit-mask-image:linear-gradient(#0000,#000 6rem);mask-image:linear-gradient(#0000,#000 6rem)}

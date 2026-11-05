@@ -12,7 +12,7 @@ Static site, no framework, no build step on Vercel. Every page is a real HTML fi
 | Page title, description, form messages, the other-language page | the `<!--page … -->` block at the top of that file |
 | Header / footer (one copy per language) | `src/partials/header-en.html`, `header-hr.html`, `footer-en.html`, `footer-hr.html` |
 | `<head>`, tags shared by every page | `src/layout.html` |
-| Footer options for one page | in its `<!--page … -->` block: `footer_cta: off` (no CTA block), `footer_band: band` (black instead of #141414) |
+| Footer options for one page | in its `<!--page … -->` block: `footer_cta: off` (no CTA block). The footer is black (#000, with waves) while it has its CTA block and #141414 without it; `footer_band: band` or `footer_band: band-alt` overrides that |
 | Styles (compiled Tailwind + a few own rules at the end) | `assets/css/site.css` |
 | Behaviour: menu, FAQ, popups, collage, form, WhatsApp pill | `assets/js/site.js` |
 | Images, fonts | `assets/img/`, `assets/fonts/` (Bricolage Grotesque, woff2, OFL) |
@@ -39,10 +39,14 @@ period wide, two lines high), so the waves look the same at every width and are 
   whole page (`<div id="app" class="zw-all">`), so the lines run on without a seam where two black sections
   meet; black sections are transparent over it, #141414 sections and cards cover it. Exception, long-read
   pages (`long_read()` in `build.py`: blog articles EN/HR, `/privacy/`, `/hr/privatnost/`): waves only behind
-  the page header (title and subtitle), fading out before the text. CSS: the `zw-all`, `zw-head`, `zw-clip`
+  the page header (title and subtitle), fading out before the text, and behind the black footer with the
+  closing CTA, fading in at its top. CSS: the `zw-all`, `zw-head`, `zw-clip`
   rules at the end of `assets/css/site.css`.
 - **`'hero'`**: only where a page has the marker `<!--#waves-->`: the home hero and section 07 (EN and HR),
   and the closing "Send us your website" block on How it works and FAQ.
+
+Closing CTA blocks are black (#000) like home section 07: "Send us your website" on How it works and FAQ
+(EN/HR), and the footer with "Get it done by zip." on every page that has it.
 
 To go back to the hero and section 07 only: set `WAVES = 'hero'` in `tools/build.py`, then run
 `python3 tools/build.py` and commit. Nothing else needs to change (the `zw-all`/`zw-head` CSS is then unused).

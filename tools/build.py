@@ -21,7 +21,8 @@ OG_ALT = {
 # Wavy lines (waves() below). One switch:
 #   'all-black'  behind every black (#000) area on every page, as one continuous layer (no seams between
 #                neighbouring black sections). #141414 sections and cards cover it. On long-read pages
-#                (LONG_READ) only behind the page header (title and subtitle), never behind the text.
+#                (long_read()) only behind the page header (title and subtitle) and a black footer (the
+#                closing CTA), never behind the text.
 #   'hero'       only where a page has <!--#waves--> (home hero and section 07; the closing CTA on
 #                How it works and FAQ).
 WAVES = 'all-black'
@@ -148,10 +149,11 @@ def build():
             '<link rel="alternate" hreflang="x-default" href="%s">' % (SITE + url_path(en['route'])),
         ])
         body = p['body']
-        # optional page settings for the footer: "footer_cta: off" drops its CTA block,
-        # "footer_band: band" makes it black instead of Shadow (#141414)
+        # optional page settings for the footer: "footer_cta: off" drops its CTA block. The footer is black
+        # (band, with waves) while it carries the CTA block, else #141414 (band-alt); "footer_band: band"
+        # or "footer_band: band-alt" overrides that
         footer_cta = p.get('footer_cta', 'on') != 'off'
-        footer_band = p.get('footer_band', 'band-alt')
+        footer_band = p.get('footer_band', 'band' if footer_cta else 'band-alt')
         for kind in ('header', 'footer'):
             marker = '<!--#%s-->' % kind
             if body.count(marker) != 1:
@@ -175,6 +177,13 @@ def build():
                 if body.count('<main id="main" class="') != 1:
                     sys.exit('%s: long-read page needs <main id="main" class="...">' % p['src'])
                 body = body.replace('<main id="main" class="', '<main id="main" class="zw-clip ')
+                if footer_band == 'band':  # a black footer (the closing CTA) gets its own layer, fading in at the top
+                    if body.count('<footer class="band ') != 1:
+                        sys.exit('%s: expected one <footer class="band ...">' % p['src'])
+                    i = body.index('>', body.index('<footer class="band ')) + 1
+                    body = body.replace('<footer class="band ', '<footer class="zw-foot band ')
+                    i += len('zw-foot ')
+                    body = body[:i] + waves('foot') + body[i:]
             else:
                 app_attr = ' class="zw-all"'
                 body = waves('page') + body
