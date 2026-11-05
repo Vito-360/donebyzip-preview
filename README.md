@@ -27,17 +27,22 @@ hero, three problems, what the free check looks like, work, packages, questions,
 
 ### Hero image (the main character)
 
-The right column of the hero (below the text on phones) is empty until the image exists, and the
-layout is finished without it. To add it:
+`assets/img/hero-character.webp` (900 × 1125, 4:5) is in both home pages (`<figure class="zh-figure">` under the
+comment `HERO IMAGE`), with an alt text in each language. Without an `<img>` there the figure is hidden and the
+hero is a single column (CSS `:has(img)`).
 
-1. Save the image as `assets/img/hero-character.webp`, **900 × 1100 px**, WebP.
-2. In both home pages find `<!-- HERO IMAGE: ... -->` and put the image inside the `<figure class="zh-figure">`
-   that follows it:
-   ```html
-   <figure class="zh-figure"><img src="/assets/img/hero-character.webp" width="900" height="1100" alt="…" fetchpriority="high"></figure>
-   ```
-   Write the `alt` in each language.
-3. Run `python3 tools/build.py`. The hero switches to two columns by itself (CSS `:has(img)`).
+It is made by **`python3 tools/compose-hero.py`** (Pillow + numpy) from two files in `src/images/`:
+`hero-photo.jpg` (the photo, 4:5) and `hero-character-green.jpg` (the drawn character on a green screen).
+The script keys out the green (no green fringe, the white body fully opaque), cuts the figure at the knees,
+places it (`--head-top`, `--center-x`; it refuses to cross into the right half), blurs readable text (`--blur`)
+and writes two versions:
+
+- `hero-character.webp`: (a) the character pure white, as in the videos; **used on the site**;
+- `hero-character-warm.webp`: (b) the white slightly warmed by the scene's light (to compare; switch the
+  `src` in both home pages to use it).
+
+New photo or character: replace the files in `src/images/` (or pass `--photo` / `--character`), run the script,
+then `python3 tools/build.py` is not needed unless the HTML changes.
 
 ### Prices
 
@@ -95,7 +100,7 @@ small script at the top of every page.
 ## Prije objave
 
 - [ ] **Cijene** u `src/data/prices.json` (sada su sve prazne; vidi "Prices" gore).
-- [ ] **Slika glavnog lika** u heru: `assets/img/hero-character.webp`, 900 × 1100, WebP (vidi "Hero image").
+- [ ] **Slika glavnog lika**: ubačena je verzija (a); odabrati (a) čisto bijeli ili (b) utopljeni lik (vidi "Hero image").
 - [ ] **Prije/poslije koncepti**: sekcija još ne postoji, dodaje se na početnu kad budu gotovi.
 - [ ] **Prazna polja u politici privatnosti** (`src/pages/privacy.html`, `src/pages/hr/privatnost.html`):
       ime voditelja obrade i ostala označena polja, te provjera popisa obrađivača.

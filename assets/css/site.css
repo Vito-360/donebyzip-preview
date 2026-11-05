@@ -51,7 +51,7 @@ a.chip{min-height:2.75rem}
 .zh-link:hover{text-decoration-thickness:2px}
 .zh-figure{margin:0}
 .zh-figure:not(:has(img)){display:none}
-.zh-figure img{display:block;width:100%;height:auto;aspect-ratio:900/1100;object-fit:cover}
+.zh-figure img{display:block;width:100%;height:auto;aspect-ratio:900/1125;object-fit:cover}
 @media (min-width:64rem){.zh-hero-grid:has(.zh-figure img){grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}}
 @media (max-width:39.99rem){.zh-actions .zh-cta{width:100%}}
 /* certificates: one calm row */
@@ -121,3 +121,9 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 /* Phones, while the hero has no character image: no full-screen hero, so section 02 starts close
    below the button. The bottom padding still holds the 01. With an image the full height comes back. */
 @media (max-width:39.99rem){.zh-hero:not(:has(.zh-figure img)){min-height:0;align-items:flex-start}}
+/* One column (phones, tablets) with the character image: the photo ends the hero, no empty band below it;
+   the 01 sits on the photo's dark floor, bottom right (the bottom of the photo has nothing important). */
+@media (max-width:63.99rem){
+  .zh-hero:has(.zh-figure img){padding-bottom:0}
+  .zh-hero:has(.zh-figure img) .zh-no-row{z-index:2;bottom:.5rem}
+}
