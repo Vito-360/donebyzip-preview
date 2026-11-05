@@ -8,8 +8,8 @@ src/layout.html          the document around every page ({{...}} placeholders)
 src/partials/*.html      header-en, header-hr, footer-en, footer-hr ({{alt}} = the other language's page)
 src/pages/**/*.html      one file per page: a <!--page ... --> block with its settings, then its body.
                          <!--#header--> and <!--#footer--> mark where the partials go.
-src/data/prices.json     prices; {{price:key}} in a page becomes "from € X" / "od X €" or, if empty,
-                         "Price in writing after the free check".
+src/data/prices.json     prices; {{price:key}} in a page becomes "from € X" / "od X €". If empty: nothing,
+                         except the Website package, which shows "from € [IZNOS]" until the amount is in.
 """
 import glob, html, json, os, re, sys
 
@@ -55,9 +55,10 @@ def out_file(route):
 
 
 PRICE_TEXT = {
-    'en': dict(empty='Price in writing after the free check', fmt='from € {n}', mo='/mo'),
-    'hr': dict(empty='Cijena napismeno nakon besplatne provjere', fmt='od {n} €', mo='/mj'),
+    'en': dict(fmt='from € {n}', mo='/mo'),
+    'hr': dict(fmt='od {n} €', mo='/mj'),
 }
+PRICE_PLACEHOLDER = ('website',)  # while empty these show "from € [IZNOS]" / "od [IZNOS] €"; the others show nothing
 
 
 def price(prices, key, lang, src):
@@ -66,7 +67,9 @@ def price(prices, key, lang, src):
     p, t = prices[key], PRICE_TEXT[lang]
     amount = p.get('from')
     if amount in (None, ''):
-        return t['empty']
+        if key in PRICE_PLACEHOLDER:
+            return t['fmt'].format(n='[IZNOS]') + (t['mo'] if p.get('monthly') else '')
+        return ''
     if not isinstance(amount, (int, float)) or amount <= 0:
         sys.exit('src/data/prices.json: "%s" from must be a number of euros or null' % key)
     n = ('{:,.0f}' if float(amount).is_integer() else '{:,.2f}').format(amount)

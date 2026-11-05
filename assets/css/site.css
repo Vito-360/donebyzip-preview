@@ -376,3 +376,7 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 /* Home, work: 4 cards (Studio Amage, Apartments Grbić, Look Longer, Your business): 4 in a row on a
    computer (from 1024 px), 2 in a row on tablets and phones. */
 @media (min-width:64rem){.zp-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:2rem 1.25rem}}
+/* Packages: no price line under an add-on while its price is empty; one note under the three packages */
+.zh-price:empty{display:none}
+.zh-pk-note{margin-top:1.75rem;color:var(--color-fg);font-size:1.0625rem;font-weight:600;letter-spacing:-.01em}
+.zh-pk-note+.zh-pk-foot{margin-top:.5rem}
