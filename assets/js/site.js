@@ -24,6 +24,33 @@
       });
     }
 
+    /* Hero: a phone where "bakery near me" is typed and three other bakeries appear, then the line below.
+       Starts when the hero is on screen, about 4 s, stops on the end state. Reduced motion: end state at once. */
+    $$("[data-search]").forEach((zs) => {
+      const q = zs.querySelector(".zs-q-t");
+      const rows = [...zs.querySelectorAll(".zs-r")];
+      const cap = zs.querySelector(".zs-cap");
+      const done = () => zs.classList.add("zs-done");
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return done();
+      const text = q.dataset.q;
+      const io = new IntersectionObserver(([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        q.textContent = "";
+        zs.classList.add("zs-typing");
+        let i = 0;
+        const type = () => {
+          q.textContent = text.slice(0, ++i);
+          if (i < text.length) return setTimeout(type, 75);
+          rows.forEach((r, k) => setTimeout(() => r.classList.add("is-in"), 350 + k * 450));
+          setTimeout(() => cap.classList.add("is-in"), 350 + rows.length * 450 + 350);
+          setTimeout(done, 350 + rows.length * 450 + 900);
+        };
+        setTimeout(type, 250);
+      }, { threshold: 0.35 });
+      io.observe(zs);
+    });
+
     /* Services dropdown in the header: click / Enter / Space toggles, Esc closes and returns focus,
        a click or focus outside closes it. */
     $$(".zn-dd").forEach((dd) => {

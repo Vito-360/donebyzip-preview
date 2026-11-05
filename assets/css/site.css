@@ -166,3 +166,34 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 @media (prefers-reduced-motion:reduce){.zc-box{animation:none}}
 /* ---- Wavy lines behind the home hero and section 07 (inline SVG from tools/build.py) ---- */
 .zw-waves{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:none}
+/* ---- Hero visual: a phone with a local search where you are not (index.html, hr/index.html) ---- */
+@media (min-width:64rem){.zh-hero-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}}
+.zs{display:grid;justify-items:center;gap:1.25rem}
+.zs-phone{width:min(19rem,100%);padding:.55rem;border-radius:2.6rem;background:#1a1a1a;border:1px solid var(--color-line-2);box-shadow:0 30px 60px -30px #000}
+.zs-screen{position:relative;border-radius:2.1rem;background:#0b0b0c;padding:2.6rem .9rem 1.1rem;display:grid;gap:.9rem}
+.zs-notch{position:absolute;top:.7rem;left:50%;width:4.5rem;height:1.15rem;margin-left:-2.25rem;border-radius:999px;background:#000}
+.zs-q{display:flex;align-items:center;gap:.55rem;height:2.75rem;padding:0 .95rem;border-radius:999px;background:#1d1d20;border:1px solid var(--color-line-2);color:var(--color-fg-3)}
+.zs-q-t{color:var(--color-fg);font-size:.9375rem;white-space:nowrap}
+.zs-caret{display:none;width:1.5px;height:1.1rem;margin-left:-.4rem;background:var(--color-fg)}
+.zs-typing:not(.zs-done) .zs-caret{display:block;animation:zs-blink 1s steps(1) infinite}
+@keyframes zs-blink{50%{opacity:0}}
+.zs-res{display:grid}
+.zs-r{display:grid;gap:.2rem;padding:.8rem .2rem;border-top:1px solid var(--color-line)}
+.zs-r:first-child{border-top:0}
+.zs-name{color:var(--color-fg);font-size:1rem;font-weight:600;letter-spacing:-.01em}
+.zs-stars{display:flex;align-items:center;gap:.1rem;color:var(--color-fg-2);font-size:.8125rem}
+.zs-stars>span{margin-left:.35rem}
+.zs-meta{color:var(--color-fg-3);font-size:.8125rem}
+.zs-btns{display:flex;gap:.4rem;margin-top:.35rem}
+.zs-btns span{display:inline-flex;align-items:center;height:1.75rem;padding:0 .75rem;border-radius:999px;background:#1d1d20;border:1px solid var(--color-line-2);color:var(--color-fg-2);font-size:.75rem}
+.zs-cap{color:var(--color-fg);font-size:1.125rem;font-weight:600;letter-spacing:-.01em;text-align:center}
+/* start state, only with JS: the query, the results and the line wait for the animation */
+.js .zs:not(.zs-done):not(.zs-typing) .zs-q-t{visibility:hidden}
+.js .zs:not(.zs-done) .zs-r:not(.is-in),.js .zs:not(.zs-done) .zs-cap:not(.is-in){opacity:0;transform:translateY(8px)}
+.zs-r,.zs-cap{transition:opacity .35s var(--ease-out),transform .35s var(--ease-out)}
+@media (prefers-reduced-motion:reduce){
+  .js .zs .zs-q-t{visibility:visible}
+  .js .zs .zs-r,.js .zs .zs-cap{opacity:1;transform:none;transition:none}
+  .zs-caret{display:none!important}
+}
+@media (max-width:63.99rem){.zs{margin-top:.5rem}}
