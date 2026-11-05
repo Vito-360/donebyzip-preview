@@ -41,7 +41,7 @@
         let i = 0;
         const type = () => {
           q.textContent = text.slice(0, ++i);
-          if (i < text.length) return setTimeout(type, 75);
+          if (i < text.length) return setTimeout(type, Math.round(1100 / text.length)); // typing takes ~1.1 s for any query
           rows.forEach((r, k) => setTimeout(() => r.classList.add("is-in"), 350 + k * 450));
           setTimeout(() => cap.classList.add("is-in"), 350 + rows.length * 450 + 350);
           setTimeout(done, 350 + rows.length * 450 + 900);
