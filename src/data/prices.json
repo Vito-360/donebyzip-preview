@@ -1,0 +1,35 @@
+{
+  "_how": "Amount in euros as a number (e.g. 790). null: the Website package shows 'from € [IZNOS]', the add-ons show no price. monthly: true adds /mo (/mj). See README.",
+  "website": {
+    "from": 590,
+    "monthly": false
+  },
+  "local-seo": {
+    "from": null,
+    "monthly": true
+  },
+  "google-ads": {
+    "from": null,
+    "monthly": true
+  },
+  "meta-ads": {
+    "from": null,
+    "monthly": true
+  },
+  "ai-assistant": {
+    "from": null,
+    "monthly": true
+  },
+  "booking-reminders": {
+    "from": null,
+    "monthly": true
+  },
+  "review-requests": {
+    "from": null,
+    "monthly": true
+  },
+  "maintenance": {
+    "from": null,
+    "monthly": true
+  }
+}

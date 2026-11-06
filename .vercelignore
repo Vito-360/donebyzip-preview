@@ -1,0 +1,4 @@
+# Sources and tools, not part of the public site (the generated pages are)
+src/
+tools/
+README.md
