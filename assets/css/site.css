@@ -455,3 +455,11 @@ details[open]>.mc-sum .mc-ico:after{transform:rotate(0)}
   .zip-foot nav>p.mb-1{display:none}
   footer .aspect-\[236\/92\]{max-width:40%;margin-top:1.5rem}
 }
+/* "More" lists ([data-mm], assets/js/site.js) and phone-only links */
+.mm-btn,.zm-only{display:none}
+@media (max-width:47.99rem){
+  .mm:not(.mm-open)>.mm-x{display:none!important}
+  .mm-btn{display:inline-flex;align-items:center;gap:.6rem;min-height:2.75rem;margin-top:.25rem;color:var(--color-fg);font-size:1rem;font-weight:500;letter-spacing:-.01em;cursor:pointer}
+  .mm-btn[aria-expanded=true] .mc-ico:after{transform:rotate(0)}
+  .zm-only{display:inline-flex}
+}

@@ -171,6 +171,29 @@
       mq.addEventListener("change", apply);
     }
 
+    /* [data-mm="N"]: on phones (< 768 px) a list shows its first N items; a "More" / "Više" button (+/-,
+       aria-expanded) opens the rest. From 768 px up and without JS everything shows; nothing leaves the HTML. */
+    $$("[data-mm]").forEach((list, k) => {
+      const n = +list.dataset.mm;
+      const items = [...list.children].filter((c) => c.tagName === "LI");
+      if (items.length <= n) return;
+      items.slice(n).forEach((li) => li.classList.add("mm-x"));
+      list.classList.add("mm");
+      if (!list.id) list.id = "mm-" + k;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "mm-btn";
+      btn.setAttribute("aria-expanded", "false");
+      btn.setAttribute("aria-controls", list.id);
+      btn.innerHTML = (document.documentElement.lang === "hr" ? "Više" : "More") + '<span class="mc-ico" aria-hidden="true"></span>';
+      btn.addEventListener("click", () => {
+        const open = !list.classList.contains("mm-open");
+        list.classList.toggle("mm-open", open);
+        btn.setAttribute("aria-expanded", open);
+      });
+      list.after(btn);
+    });
+
     /* Services dropdown in the header: click / Enter / Space toggles, Esc closes and returns focus,
        a click or focus outside closes it. */
     $$(".zn-dd").forEach((dd) => {
