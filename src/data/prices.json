@@ -1,5 +1,5 @@
 {
-  "_how": "Amount in euros as a number (e.g. 790). null: the Website package shows 'from € [IZNOS]', the add-ons show no price. monthly: true adds /mo (/mj). See README.",
+  "_how": "Amount in euros as a number (e.g. 790). null: the Website package shows 'from €[IZNOS]', the add-ons show no price. monthly: true adds /mo (/mj). See README.",
   "website": {
     "from": 590,
     "monthly": false

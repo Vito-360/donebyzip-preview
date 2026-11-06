@@ -8,8 +8,8 @@ src/layout.html          the document around every page ({{...}} placeholders)
 src/partials/*.html      header-en, header-hr, footer-en, footer-hr ({{alt}} = the other language's page)
 src/pages/**/*.html      one file per page: a <!--page ... --> block with its settings, then its body.
                          <!--#header--> and <!--#footer--> mark where the partials go.
-src/data/prices.json     prices; {{price:key}} in a page becomes "from € X" / "od X €". If empty: nothing,
-                         except the Website package, which shows "from € [IZNOS]" until the amount is in.
+src/data/prices.json     prices; {{price:key}} in a page becomes "from €X" / "od X €". If empty: nothing,
+                         except the Website package, which shows "from €[IZNOS]" until the amount is in.
                          {{amount:key}} is the bare amount for running text: "€590" / "590 €". Both also work in
                          a page's title and description.
 """
@@ -57,10 +57,10 @@ def out_file(route):
 
 
 PRICE_TEXT = {
-    'en': dict(fmt='from € {n}', mo='/mo'),
+    'en': dict(fmt='from €{n}', mo='/mo'),
     'hr': dict(fmt='od {n} €', mo='/mj'),
 }
-PRICE_PLACEHOLDER = ('website',)  # while empty these show "from € [IZNOS]" / "od [IZNOS] €"; the others show nothing
+PRICE_PLACEHOLDER = ('website',)  # while empty these show "from €[IZNOS]" / "od [IZNOS] €"; the others show nothing
 
 
 def amount_text(prices, key, lang, src):
@@ -133,7 +133,7 @@ PRICE_NAME = {'website': {'en': 'Website', 'hr': 'Web stranica'}}
 
 
 def price_sentence(prices, key, lang, src):
-    """For FAQ answers: nothing while the price is empty, else " Website: from € 790." """
+    """For FAQ answers: nothing while the price is empty, else " Website: from €790." """
     p = prices.get(key) or {}
     if p.get('from') in (None, ''):
         return ''
