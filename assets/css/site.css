@@ -394,3 +394,23 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
 /* Steps: one line under 02 Demo */
 .zh-steps .zh-step-dl>span:last-child{display:grid;gap:.15rem}
 .zh-step-d{color:var(--color-fg-3);font-size:.8125rem;line-height:1.4;max-width:24ch}
+/* Phones (< 768 px), Nov 2026: calmer type and rhythm on every page.
+   h1 about 36 px, h2 about 30 px; body text 16 px / 1.55; sections about 68 px top, 80 px bottom (the sticky
+   button needs ~66 px and hides at every CTA anyway); the big section numbers follow --pad, so they shrink too. */
+@media (max-width:47.99rem){
+  .zh-h1{font-size:2.25rem;line-height:1}
+  .t-display{font-size:2.25rem;line-height:1.02}
+  .t-h2{font-size:1.875rem;line-height:1.06}
+  #app .text-\[0\.9375rem\],#app .text-\[0\.95rem\],.zh-note,.zh-finding-p,.zh-fix,.zh-pk-foot,.t-lede,.zh-sub{font-size:1rem}
+  #app .leading-relaxed,.zh-sub,.t-lede{line-height:1.55}
+  #app .card p.text-fg-2{font-size:1rem;line-height:1.55!important}
+  main.zw-clip p:not(.text-fg-3):not(.pill-eyebrow),main.zw-clip li{font-size:1rem;line-height:1.55}
+  .zh-sec,.zq-group{--pad:4.25rem}
+  .zh-sec{padding-bottom:calc(var(--pad) + .75rem)}
+  main#main.pb-20{padding-bottom:5rem}
+  :root{--zh-no-size:3.25rem}
+}
+@media (max-width:47.99rem){
+  .zh-hero .zh-sub{font-size:1rem;line-height:1.55}
+  #app section.card li>span:not([aria-hidden]){font-size:1rem;line-height:1.55}
+}
