@@ -136,6 +136,37 @@ small script at the top of every page.
 `vercel.json` still sends `X-Robots-Tag: noindex, nofollow` and every page has
 `<meta name="robots" content="noindex, nofollow">`: remove both when the site goes live.
 
+## Grane i objava
+
+- `kopija` je radna grana: sve izmjene idu tamo, svaki commit dobije svoj Vercel preview.
+- `main` je produkcija (https://donebyzip-preview.vercel.app/). Ažurira se tek kad Vito odobri, spajanjem
+  `kopija` u `main` (merge, bez force-pusha i bez prepisivanja povijesti).
+
+### Vraćanje stare verzije
+
+Verzija stranice prije prvog spajanja `kopija` → `main` (6. 11. 2026) označena je oznakom (tagom) `stara-verzija`.
+
+**Najbrže, bez gita (Vercel):** projekt `donebyzip-preview` → Deployments → produkcijski deploy commita na koji
+pokazuje `stara-verzija` (vidi `git rev-parse --short stara-verzija`) → izbornik "…" → "Promote to Production"
+(ili "Instant Rollback"). Stranica se vrati za nekoliko sekundi, a `main` ostaje kakav jest; sljedeći push na
+`main` opet objavljuje novu verziju.
+
+**Trajno, preko gita** (novi commit na `main` čiji je sadržaj točno `stara-verzija`; povijest se ne prepisuje,
+pa se i to može poništiti):
+
+```bash
+git fetch origin --tags
+git checkout main
+git pull origin main
+git rm -r -q .
+git checkout stara-verzija -- .
+git commit -m "Vrati staru verziju (oznaka stara-verzija)"
+git push origin main
+```
+
+Vercel nakon pusha sam napravi produkcijski deploy stare verzije. Nova verzija ostaje u povijesti i na grani
+`kopija`; vraća se ponovnim spajanjem `kopija` u `main`.
+
 ## Prije objave
 
 - [ ] **Cijene** u `src/data/prices.json`: Web stranica upisana (od 590 €, jednokratno); dodaci su još prazni
