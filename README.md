@@ -144,7 +144,8 @@ small script at the top of every page.
 
 ### Vraćanje stare verzije
 
-Verzija stranice prije prvog spajanja `kopija` → `main` (6. 11. 2026) označena je oznakom (tagom) `stara-verzija`.
+Verzija stranice prije prvog spajanja `kopija` → `main` (6. 11. 2026) je commit `b30d598`, označen oznakom (tagom)
+`stara-verzija`. Ako oznaka na GitHubu ne postoji, u naredbama ispod umjesto `stara-verzija` upišite `b30d598`.
 
 **Najbrže, bez gita (Vercel):** projekt `donebyzip-preview` → Deployments → produkcijski deploy commita na koji
 pokazuje `stara-verzija` (vidi `git rev-parse --short stara-verzija`) → izbornik "…" → "Promote to Production"
