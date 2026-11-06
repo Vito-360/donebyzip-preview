@@ -138,7 +138,8 @@ small script at the top of every page.
 
 ## Prije objave
 
-- [ ] **Cijene** u `src/data/prices.json` (sada su sve prazne; vidi "Prices" gore).
+- [ ] **Cijene** u `src/data/prices.json`: Web stranica upisana (od 590 €, jednokratno); dodaci su još prazni
+      (bez cijene se ne prikazuju; vidi "Prices" gore).
 - [ ] **Prije/poslije koncepti**: sekcija još ne postoji, dodaje se na početnu kad budu gotovi.
 - [ ] **Prazna polja u politici privatnosti** (`src/pages/privacy.html`, `src/pages/hr/privatnost.html`):
       ime voditelja obrade i ostala označena polja, te provjera popisa obrađivača.
