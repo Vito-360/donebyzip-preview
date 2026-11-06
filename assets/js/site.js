@@ -185,7 +185,7 @@
       btn.className = "mm-btn";
       btn.setAttribute("aria-expanded", "false");
       btn.setAttribute("aria-controls", list.id);
-      btn.innerHTML = (document.documentElement.lang === "hr" ? "Više" : "More") + '<span class="mc-ico" aria-hidden="true"></span>';
+      btn.innerHTML = (list.dataset.mmLabel || (document.documentElement.lang === "hr" ? "Više" : "More")) + '<span class="mc-ico" aria-hidden="true"></span>';
       btn.addEventListener("click", () => {
         const open = !list.classList.contains("mm-open");
         list.classList.toggle("mm-open", open);
@@ -215,6 +215,11 @@
       acc.dataset.open = open;
       acc.querySelector("button").setAttribute("aria-expanded", open);
     };
+    // phones: every question starts closed (the first one is open from 768 px up), without the closing animation
+    if (matchMedia("(max-width: 47.99rem)").matches) {
+      accs.forEach((a) => { if (a.dataset.open === "true") { a.classList.add("acc-now"); setAcc(a, false); } });
+      requestAnimationFrame(() => requestAnimationFrame(() => accs.forEach((a) => a.classList.remove("acc-now"))));
+    }
     accs.forEach((acc) =>
       acc.querySelector("button").addEventListener("click", () => {
         const wasOpen = acc.dataset.open === "true";

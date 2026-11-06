@@ -480,3 +480,24 @@ details[open]>.mc-sum .mc-ico:after{transform:rotate(0)}
   .mc-inc-sum{display:flex;justify-content:flex-start;gap:.6rem;color:var(--color-fg);font-size:1rem;font-weight:500}
   .mc-inc{gap:.5rem}
 }
+/* Phones, round 3 (Nov 2026). Wider screens: .zy-add and .zfm-contact are hidden, nothing else changes. */
+.zy-add,.zfm-contact{display:none}
+.acc-now .acc-panel{transition:none}
+@media (max-width:47.99rem){
+  /* footer: one block of links (Work, How it works, Questions, Blog, Privacy) + language, phone and email in one line */
+  .zip-foot{display:flex;flex-wrap:wrap;column-gap:1.25rem;row-gap:0;margin-top:3rem;padding-top:1.5rem}
+  .zip-foot>div:first-child{flex-basis:100%;gap:0}
+  .zip-foot nav{display:contents}
+  .zip-foot .zfm-x,.zfm-tag,.zfm-logo{display:none}
+  .zip-foot nav[aria-label="Language"] a,.zip-foot nav[aria-label="Jezik"] a{padding-left:0!important}
+  .zfm-contact{display:flex;flex-basis:100%;flex-wrap:wrap;align-items:center;gap:0 .6rem;margin-top:.25rem;font-size:.8125rem;color:var(--color-fg-3)}
+  .zfm-contact a{display:inline-flex;align-items:center;min-height:2.75rem;color:var(--color-fg-2);text-decoration:underline;text-underline-offset:.25em}
+  footer p.mt-12{margin-top:1rem}
+  footer.relative{padding-bottom:2.5rem}
+  /* section 05: one "Add-ons" box instead of boxes 2 and 3 */
+  .zy-2,.zy-3{display:none}
+  .zy-add{display:block}
+  .zy-add-l{display:grid;gap:.75rem;margin-top:.5rem}
+  .zy-add-l dt{color:var(--color-fg);font-size:1rem;font-weight:600}
+  .zy-add-l dd{color:var(--color-fg-2);font-size:1rem;line-height:1.55}
+}
