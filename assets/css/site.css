@@ -463,3 +463,20 @@ details[open]>.mc-sum .mc-ico:after{transform:rotate(0)}
   .mm-btn[aria-expanded=true] .mc-ico:after{transform:rotate(0)}
   .zm-only{display:inline-flex}
 }
+/* Website package: "What's included" summary only on phones (from 768 px the list shows as before) */
+.mc-inc-sum{display:none}
+/* Home on phones, round 2 (Nov 2026) */
+@media (max-width:47.99rem){
+  /* section 02: Found and Booked without their animation; Trusted keeps the countdown, compact */
+  .zh-card .zf,.zh-card .h-\[118px\]{display:none}
+  .zh-card{padding:1.1rem 1.25rem}
+  .zh-cd{min-height:0;margin-top:.25rem;gap:.15rem}
+  .zh-cd-n{font-size:2.5rem}
+  /* work: Studio Amage and Apartments Grbić, then a short "All work" link */
+  .zp-grid>.zp-item:nth-child(n+3){display:none}
+  .zp-all{display:none}
+  .zp-all-m{margin-top:1.25rem}
+  /* Website package: the list under "What's included" */
+  .mc-inc-sum{display:flex;justify-content:flex-start;gap:.6rem;color:var(--color-fg);font-size:1rem;font-weight:500}
+  .mc-inc{gap:.5rem}
+}
