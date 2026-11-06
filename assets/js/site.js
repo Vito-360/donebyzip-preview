@@ -156,6 +156,21 @@
       });
     });
 
+    /* <details class="mc">: shut and tappable on phones (< 768 px), always open and inert from 768 px up, where
+       the page looks as it did. Without JS they stay open. */
+    {
+      const mq = matchMedia("(max-width: 47.99rem)");
+      const mcs = $$("details.mc");
+      const apply = () => mcs.forEach((d) => {
+        const s = d.querySelector("summary");
+        if (mq.matches) { d.open = false; s.removeAttribute("tabindex"); }
+        else { d.open = true; s.tabIndex = -1; }
+      });
+      mcs.forEach((d) => d.querySelector("summary").addEventListener("click", (e) => { if (!mq.matches) e.preventDefault(); }));
+      apply();
+      mq.addEventListener("change", apply);
+    }
+
     /* Services dropdown in the header: click / Enter / Space toggles, Esc closes and returns focus,
        a click or focus outside closes it. */
     $$(".zn-dd").forEach((dd) => {

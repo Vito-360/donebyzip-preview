@@ -414,3 +414,44 @@ footer .shell>.zip-foot:first-child{margin-top:0;border-top:0;padding-top:0}
   .zh-hero .zh-sub{font-size:1rem;line-height:1.55}
   #app section.card li>span:not([aria-hidden]){font-size:1rem;line-height:1.55}
 }
+/* <details class="mc"> (section 03 findings): looks like a plain card from 768 px up */
+.mc{display:grid;gap:.75rem}
+.mc-sum{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;cursor:default}
+.mc-sum::-webkit-details-marker{display:none}
+.mc-sum::marker{content:""}
+.mc-ico{display:none;position:relative;flex:none;width:1.5rem;height:1.5rem;border-radius:50%;background:#ffffff1a;color:var(--color-fg)}
+.mc-ico:before,.mc-ico:after{content:"";position:absolute;top:50%;left:50%;width:9px;height:1.5px;background:currentColor;translate:-50% -50%;transition:transform .25s var(--ease-out)}
+.mc-ico:after{transform:rotate(90deg)}
+details[open]>.mc-sum .mc-ico:after{transform:rotate(0)}
+.zy-short{display:none}
+/* Home on phones (< 768 px), Nov 2026: less to read. Nothing leaves the HTML. */
+@media (max-width:47.99rem){
+  .zh-hero .zh-eyebrow{display:none}
+  .zs-phone{max-height:240px}
+  /* certificates: three small chips; the three promises are hidden */
+  .zh-certs-label,.zh-certs .zh-certs-p{display:none}
+  .zh-certs .zh-certs-c{gap:.4rem;column-gap:.4rem}
+  .zh-certs .zh-certs-c li{border:1px solid var(--color-line-2);border-radius:999px;padding:.3rem .7rem;font-size:.75rem;line-height:1.2;font-weight:700}
+  /* section 02: smaller animations */
+  .zf .glass.h-10{height:2.25rem}
+  .zf-res{padding:.75rem;gap:.4rem}
+  .zh-cd{min-height:5.25rem;margin-top:.5rem}
+  .zh-cd-n{font-size:3rem}
+  .zh-card .h-\[118px\]{height:96px;transform:scale(.85);transform-origin:0 0}
+  /* section 03: findings open on tap; steps 2 x 2, names only */
+  .mc-sum{cursor:pointer;min-height:2.75rem}
+  .mc-ico{display:block}
+  .zh-finding{gap:.5rem}
+  #how .zh-steps{display:grid;grid-template-columns:1fr 1fr;gap:.6rem 1rem}
+  #how .zh-step-d{display:none}
+  /* section 05: boxes 2 and 3 as one sentence + the WhatsApp link */
+  .zy-short{display:block;color:var(--color-fg-2);font-size:1rem;line-height:1.55;margin-top:.25rem}
+  .zy-2 .zy-list,.zy-3 .zy-list{display:none}
+  /* section 06: four questions + "All questions" */
+  .zm-hide{display:none}
+  /* section 07: phone and email as one small line */
+  .zh-final .zh-small{font-size:.8125rem}
+  /* footer: two columns of links, no column titles; the big logo at 40 % */
+  .zip-foot nav>p.mb-1{display:none}
+  footer .aspect-\[236\/92\]{max-width:40%;margin-top:1.5rem}
+}
