@@ -156,6 +156,44 @@
       });
     });
 
+    /* <details class="mc">: shut and tappable on phones (< 768 px), always open and inert from 768 px up, where
+       the page looks as it did. Without JS they stay open. */
+    {
+      const mq = matchMedia("(max-width: 47.99rem)");
+      const mcs = $$("details.mc");
+      const apply = () => mcs.forEach((d) => {
+        const s = d.querySelector("summary");
+        if (mq.matches) { d.open = false; s.removeAttribute("tabindex"); }
+        else { d.open = true; s.tabIndex = -1; }
+      });
+      mcs.forEach((d) => d.querySelector("summary").addEventListener("click", (e) => { if (!mq.matches) e.preventDefault(); }));
+      apply();
+      mq.addEventListener("change", apply);
+    }
+
+    /* [data-mm="N"]: on phones (< 768 px) a list shows its first N items; a "More" / "Više" button (+/-,
+       aria-expanded) opens the rest. From 768 px up and without JS everything shows; nothing leaves the HTML. */
+    $$("[data-mm]").forEach((list, k) => {
+      const n = +list.dataset.mm;
+      const items = [...list.children].filter((c) => c.tagName === "LI");
+      if (items.length <= n) return;
+      items.slice(n).forEach((li) => li.classList.add("mm-x"));
+      list.classList.add("mm");
+      if (!list.id) list.id = "mm-" + k;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "mm-btn";
+      btn.setAttribute("aria-expanded", "false");
+      btn.setAttribute("aria-controls", list.id);
+      btn.innerHTML = (list.dataset.mmLabel || (document.documentElement.lang === "hr" ? "Više" : "More")) + '<span class="mc-ico" aria-hidden="true"></span>';
+      btn.addEventListener("click", () => {
+        const open = !list.classList.contains("mm-open");
+        list.classList.toggle("mm-open", open);
+        btn.setAttribute("aria-expanded", open);
+      });
+      list.after(btn);
+    });
+
     /* Services dropdown in the header: click / Enter / Space toggles, Esc closes and returns focus,
        a click or focus outside closes it. */
     $$(".zn-dd").forEach((dd) => {
@@ -177,6 +215,11 @@
       acc.dataset.open = open;
       acc.querySelector("button").setAttribute("aria-expanded", open);
     };
+    // phones: every question starts closed (the first one is open from 768 px up), without the closing animation
+    if (matchMedia("(max-width: 47.99rem)").matches) {
+      accs.forEach((a) => { if (a.dataset.open === "true") { a.classList.add("acc-now"); setAcc(a, false); } });
+      requestAnimationFrame(() => requestAnimationFrame(() => accs.forEach((a) => a.classList.remove("acc-now"))));
+    }
     accs.forEach((acc) =>
       acc.querySelector("button").addEventListener("click", () => {
         const wasOpen = acc.dataset.open === "true";
