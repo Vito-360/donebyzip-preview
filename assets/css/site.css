@@ -501,3 +501,14 @@ details[open]>.mc-sum .mc-ico:after{transform:rotate(0)}
   .zy-add-l dt{color:var(--color-fg);font-size:1rem;font-weight:600}
   .zy-add-l dd{color:var(--color-fg-2);font-size:1rem;line-height:1.55}
 }
+/* FAQ boxes: lighter under the mouse (devices with hover) and when the question has keyboard focus;
+   background a shade lighter, border #ffffff47, 150 ms; no transition with reduced motion. */
+.acc{transition:background-color .15s ease,border-color .15s ease}
+.acc>h3>button{cursor:pointer}
+@media (hover:hover){
+  .acc:hover{background:#1c1c1f;border-color:#ffffff47}
+  .zw-all .band .acc:hover{background:#17171a}
+}
+.acc:has(>h3>button:focus-visible){background:#1c1c1f;border-color:#ffffff47}
+.zw-all .band .acc:has(>h3>button:focus-visible){background:#17171a}
+@media (prefers-reduced-motion:reduce){.acc{transition:none}}
