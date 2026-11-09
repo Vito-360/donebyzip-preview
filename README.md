@@ -66,10 +66,10 @@ All prices are in **`src/data/prices.json`**, one entry per package or add-on:
 ```
 
 - `from`: amount in euros as a number (`790`, `1200`, `49.5`), or `null`.
-- `null`: the Website package shows "from € [IZNOS]" / "od [IZNOS] €" (so the gap is obvious), the add-ons
+- `null`: the Website package shows "from €[IZNOS]" / "od [IZNOS] €" (so the gap is obvious), the add-ons
   show no price. Under the three packages, once: "Exact price after the free check." / "Točnu cijenu dobijete
   nakon besplatne provjere."
-- A number shows "from € 1,200" / "od 1.200 €"; with `"monthly": true` it adds "/mo" / "/mj".
+- A number shows "from €1,200" / "od 1.200 €"; with `"monthly": true` it adds "/mo" / "/mj".
 - Keys: `website`, `local-seo`, `google-ads`, `meta-ads`, `ai-assistant`, `booking-reminders`,
   `review-requests`, `maintenance`. In a page, `{{price:key}}` is replaced at build time.
 

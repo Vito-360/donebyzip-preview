@@ -8,8 +8,10 @@ src/layout.html          the document around every page ({{...}} placeholders)
 src/partials/*.html      header-en, header-hr, footer-en, footer-hr ({{alt}} = the other language's page)
 src/pages/**/*.html      one file per page: a <!--page ... --> block with its settings, then its body.
                          <!--#header--> and <!--#footer--> mark where the partials go.
-src/data/prices.json     prices; {{price:key}} in a page becomes "from € X" / "od X €". If empty: nothing,
-                         except the Website package, which shows "from € [IZNOS]" until the amount is in.
+src/data/prices.json     prices; {{price:key}} in a page becomes "from €X" / "od X €". If empty: nothing,
+                         except the Website package, which shows "from €[IZNOS]" until the amount is in.
+                         {{amount:key}} is the bare amount for running text: "€590" / "590 €". Both also work in
+                         a page's title and description.
 """
 import glob, html, json, os, re, sys
 
@@ -55,10 +57,32 @@ def out_file(route):
 
 
 PRICE_TEXT = {
-    'en': dict(fmt='from € {n}', mo='/mo'),
+    'en': dict(fmt='from €{n}', mo='/mo'),
     'hr': dict(fmt='od {n} €', mo='/mj'),
 }
-PRICE_PLACEHOLDER = ('website',)  # while empty these show "from € [IZNOS]" / "od [IZNOS] €"; the others show nothing
+PRICE_PLACEHOLDER = ('website',)  # while empty these show "from €[IZNOS]" / "od [IZNOS] €"; the others show nothing
+
+
+def amount_text(prices, key, lang, src):
+    """{{amount:key}}: the bare amount for running text, "€590" / "590 €" ("[IZNOS]" while it is empty)."""
+    if key not in prices:
+        sys.exit('%s: {{amount:%s}} is not in src/data/prices.json' % (src, key))
+    a = prices[key].get('from')
+    if a in (None, ''):
+        n = '[IZNOS]'
+    elif not isinstance(a, (int, float)) or a <= 0:
+        sys.exit('src/data/prices.json: "%s" from must be a number of euros or null' % key)
+    else:
+        n = ('{:,.0f}' if float(a).is_integer() else '{:,.2f}').format(a)
+        if lang == 'hr':
+            n = n.replace(',', ' ').replace('.', ',').replace(' ', '.')
+    return ('€' + n) if lang == 'en' else (n + ' €')
+
+
+def price_placeholders(text, prices, lang, src):
+    text = re.sub(r'\{\{price-sentence:([a-z0-9-]+)\}\}', lambda m: price_sentence(prices, m.group(1), lang, src), text)
+    text = re.sub(r'\{\{price:([a-z0-9-]+)\}\}', lambda m: price(prices, m.group(1), lang, src), text)
+    return re.sub(r'\{\{amount:([a-z0-9-]+)\}\}', lambda m: amount_text(prices, m.group(1), lang, src), text)
 
 
 def price(prices, key, lang, src):
@@ -109,7 +133,7 @@ PRICE_NAME = {'website': {'en': 'Website', 'hr': 'Web stranica'}}
 
 
 def price_sentence(prices, key, lang, src):
-    """For FAQ answers: nothing while the price is empty, else " Website: from € 790." """
+    """For FAQ answers: nothing while the price is empty, else " Website: from €790." """
     p = prices.get(key) or {}
     if p.get('from') in (None, ''):
         return ''
@@ -182,8 +206,7 @@ def build():
             body = body.replace(marker, part)
         n_forms = iter(range(1, 100))
         body = re.sub(r'<!--#form-->', lambda m: form(partial['form-' + p['lang']], next(n_forms), p['route']), body)
-        body = re.sub(r'\{\{price-sentence:([a-z0-9-]+)\}\}', lambda m: price_sentence(prices, m.group(1), p['lang'], p['src']), body)
-        body = re.sub(r'\{\{price:([a-z0-9-]+)\}\}', lambda m: price(prices, m.group(1), p['lang'], p['src']), body)
+        body = price_placeholders(body, prices, p['lang'], p['src'])
         app_attr = ''
         if WAVES == 'hero':
             n_waves = iter(range(1, 100))
@@ -211,7 +234,8 @@ def build():
         else:
             sys.exit('tools/build.py: WAVES must be "all-black" or "hero"')
         page = layout
-        for k, v in (('lang', p['lang']), ('title', p['title']), ('description', p['description']),
+        for k, v in (('lang', p['lang']), ('title', price_placeholders(p['title'], prices, p['lang'], p['src'])),
+                     ('description', price_placeholders(p['description'], prices, p['lang'], p['src'])),
                      ('canonical', SITE + url_path(p['route'])), ('alternates', alternates),
                      ('hash_redirect', hash_redirect), ('app_attr', app_attr),
                      ('og_image', '%s/assets/og/og-%s.jpg' % (SITE, p['lang'])), ('og_alt', OG_ALT[p['lang']]), ('content', body)):
