@@ -24,8 +24,8 @@
       });
     }
 
-    /* Hero: the phone shows the empty search field; "plumber near me" is typed (0.7 s) and three other
-       businesses appear (done by ~1.6 s, never more than 2 s). Starts when the phone is on screen, runs
+    /* Hero: the phone shows the empty search field; "pilates near me" is typed (0.7 s) and three other
+       studios appear (done by ~1.6 s, never more than 2 s). Starts when the phone is on screen, runs
        once, stays on the end state. Reduced motion: end state at once. Everything else in the hero is
        there from the first frame. */
     $$("[data-search]").forEach((zs) => {
