@@ -133,13 +133,13 @@ redirects to `/work/`. Links inside a page (`#contact`, `#faq`) stay as they wer
 opens that project's popup. Old addresses (`/#/blog/...`, `/#/hr#faq`) are sent to the new ones by a
 small script at the top of every page.
 
-`vercel.json` still sends `X-Robots-Tag: noindex, nofollow` and every page has
-`<meta name="robots" content="noindex, nofollow">`: remove both when the site goes live.
+The site is live on https://donebyzip.com and indexable (no robots meta tag). `vercel.json` sends
+`X-Robots-Tag: noindex, nofollow` only on `*.vercel.app` hosts (preview links), so previews stay out of Google.
 
 ## Grane i objava
 
 - `kopija` je radna grana: sve izmjene idu tamo, svaki commit dobije svoj Vercel preview.
-- `main` je produkcija (https://donebyzip-preview.vercel.app/). Ažurira se tek kad Vito odobri, spajanjem
+- `main` je produkcija (https://donebyzip.com/; kopija na https://donebyzip-preview.vercel.app/ je noindex). Ažurira se tek kad Vito odobri, spajanjem
   `kopija` u `main` (merge, bez force-pusha i bez prepisivanja povijesti).
 
 ### Vraćanje stare verzije
@@ -175,9 +175,9 @@ Vercel nakon pusha sam napravi produkcijski deploy stare verzije. Nova verzija o
 - [ ] **Prije/poslije koncepti**: sekcija još ne postoji, dodaje se na početnu kad budu gotovi.
 - [ ] **Prazna polja u politici privatnosti** (`src/pages/privacy.html`, `src/pages/hr/privatnost.html`):
       ime voditelja obrade i ostala označena polja, te provjera popisa obrađivača.
-- [ ] **Domena** u `tools/build.py` (`SITE`, komentar `DOMAIN:`): canonical, hreflang, sitemap, robots i og:image.
+- [x] **Domena** u `tools/build.py` (`SITE`, komentar `DOMAIN:`): canonical, hreflang, sitemap, robots i og:image.
 - [x] **Formspree račun i FORM_ENDPOINT** (vidi "The free check form"): upisan `https://formspree.io/f/mnpprlyv`.
       Provjeriti: prvi upis s live stranice potvrditi u Formspreeu i da upiti stižu na pravi e-mail.
-- [ ] **Maknuti noindex**: `<meta name="robots" content="noindex, nofollow">` u `src/layout.html` i
+- [x] **Maknuti noindex** (12. 11. 2026; noindex ostaje samo na `*.vercel.app`): `<meta name="robots" content="noindex, nofollow">` u `src/layout.html` i
       zaglavlje `X-Robots-Tag` u `vercel.json`.
 

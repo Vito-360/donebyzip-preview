@@ -15,7 +15,7 @@ src/data/prices.json     prices; {{price:key}} in a page becomes "from €X" / "
 """
 import glob, html, json, os, re, sys
 
-SITE = 'https://donebyzip-preview.vercel.app'  # DOMAIN: change to the real domain at launch
+SITE = 'https://donebyzip.com'  # DOMAIN: the live domain (canonical, hreflang, sitemap, robots, og:image)
 OG_ALT = {
     'en': 'zip. — People search for you. They find someone else.',
     'hr': 'zip. — Ljudi vas traže. Pronađu nekoga drugog.',

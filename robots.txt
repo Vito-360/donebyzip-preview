@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://donebyzip-preview.vercel.app/sitemap.xml
+Sitemap: https://donebyzip.com/sitemap.xml
