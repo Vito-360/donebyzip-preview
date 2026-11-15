@@ -82,6 +82,30 @@
        data-endpoint empty: opens WhatsApp with a ready message. Set (Formspree): POST, then a thank-you
        message in place of the form, or an error with a WhatsApp link. A filled honeypot (_gotcha) is
        treated as sent and nothing goes out. */
+    /* Where the visitor came from, sent with the form as "src": ?src=… on the landing URL (e.g.
+       donebyzip.com/?src=instagram in the Instagram bio, ?src=tiktok on TikTok; utm_source works too),
+       else the referring site (instagram, tiktok, facebook, google, …), else "direct". Kept for the
+       visit in sessionStorage, so it survives moving between pages before the form is sent. */
+    const src = (() => {
+      const K = "zip-src";
+      try { const kept = sessionStorage.getItem(K); if (kept) return kept; } catch (e) {}
+      const q = new URLSearchParams(location.search);
+      let v = (q.get("src") || q.get("utm_source") || "").trim().toLowerCase().replace(/[^a-z0-9_.-]/g, "").slice(0, 40);
+      if (!v && document.referrer) {
+        try {
+          const h = new URL(document.referrer).hostname.replace(/^(www|m|l|lm|vm)\./, "");
+          if (h !== location.hostname) {
+            const known = { "instagram.com": "instagram", "tiktok.com": "tiktok", "facebook.com": "facebook",
+              "linkedin.com": "linkedin", "t.co": "x", "x.com": "x" };
+            v = known[h] || (/(^|\.)google\./.test(h) ? "google" : /(^|\.)bing\.com$/.test(h) ? "bing" : "ref:" + h);
+          }
+        } catch (e) {}
+      }
+      v = v || "direct";
+      try { sessionStorage.setItem(K, v); } catch (e) {}
+      return v;
+    })();
+
     $$("[data-form]").forEach((form) => {
       const d = form.dataset;
       const site = form.elements.site;
@@ -148,7 +172,8 @@
         // an email in "contact" also goes as _replyto, so "Reply" in Formspree's email goes to the client
         const body = new FormData(form);
         if (isEmail(contact.value)) body.append("_replyto", contact.value.trim());
-        body.append("_subject", "Free check: " + site.value.trim()); // subject of Formspree's email (EN and HR alike)
+        body.append("_subject", "Free check: " + site.value.trim() + " [" + src + "]"); // subject of Formspree's email (EN and HR alike)
+        body.append("src", src); // where the visitor came from (see "src" above)
         fetch(d.endpoint, { method: "POST", body, headers: { Accept: "application/json" }, signal: ctl.signal })
           .then((r) => { if (!r.ok) throw new Error(r.status); thanks(); })
           .catch(() => { btn.disabled = false; btn.textContent = label; fail(); })

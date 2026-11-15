@@ -512,3 +512,7 @@ details[open]>.mc-sum .mc-ico:after{transform:rotate(0)}
 .acc:has(>h3>button:focus-visible){background:#1c1c1f;border-color:#ffffff47}
 .zw-all .band .acc:has(>h3>button:focus-visible){background:#17171a}
 @media (prefers-reduced-motion:reduce){.acc{transition:none}}
+
+/* Footer: Instagram and TikTok under the tagline (Nov 2026); on phones one row under the logo */
+.zfm-social{display:flex;flex-wrap:wrap;gap:0 1.25rem;margin-top:.25rem}
+@media (max-width:47.99rem){.zfm-social{margin-top:.5rem}}

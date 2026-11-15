@@ -85,10 +85,13 @@ page the marker `<!--#form-->` puts it there. Behaviour: `[data-form]` in `asset
 Where it sends is one setting, `FORM_ENDPOINT` at the top of `tools/build.py`:
 
 - `''`: the button opens WhatsApp with the two fields as a ready message.
-- A Formspree address (now `https://formspree.io/f/mnpprlyv`): the form is sent there (fields `site`, `contact`, `language`, `page`; the hidden
+- A Formspree address (now `https://formspree.io/f/mnpprlyv`): the form is sent there (fields `site`, `contact`, `language`, `page`, `src`; the hidden
   `_gotcha` field is the spam trap Formspree knows; when `contact` is an email it is also sent as `_replyto`,
   so "Reply" in Formspree's email goes to the client; `_subject` is "Free check: " + the first field, EN and HR
-  alike, so the email's subject shows the site or business name). After success the form is replaced by
+  alike, so the email's subject shows the site or business name, followed by the source in brackets, e.g. `[instagram]`).
+  `src` says where the visitor came from: `?src=…` on the landing address (bio links: `https://donebyzip.com/?src=instagram`,
+  `https://donebyzip.com/?src=tiktok`; `utm_source` works too), else the referring site (`instagram`, `tiktok`, `google`, …,
+  or `ref:<host>`), else `direct`. It is kept for the visit (sessionStorage), so it survives moving between pages. After success the form is replaced by
   "Got it. You'll hear from us within 24 hours."; on an error a WhatsApp link is shown.
 
 To switch it on: make a form at formspree.io (it shows an address like `https://formspree.io/f/abcdwxyz`),
@@ -99,6 +102,11 @@ FORM_ENDPOINT = 'https://formspree.io/f/abcdwxyz'
 ```
 
 and run `python3 tools/build.py`. Send one test from the live preview (Formspree confirms the first one).
+
+## Social links
+
+Instagram and TikTok (@donebyzip) are in the footer under the tagline (`src/partials/footer-en.html`, `footer-hr.html`,
+class `zfm-social`) and in the JSON-LD `sameAs` in `src/layout.html`.
 
 ## Share images (og:image)
 
