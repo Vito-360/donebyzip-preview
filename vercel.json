@@ -19,22 +19,42 @@
   ],
   "redirects": [
     {
-      "source": "/websites-for-boat-tours/?",
+      "source": "/websites-for-boat-tours",
       "destination": "/small-business-websites/",
       "permanent": true
     },
     {
-      "source": "/websites-for-holiday-rentals/?",
+      "source": "/websites-for-boat-tours/",
       "destination": "/small-business-websites/",
       "permanent": true
     },
     {
-      "source": "/hr/web-stranice-za-izlete-brodom/?",
+      "source": "/websites-for-holiday-rentals",
+      "destination": "/small-business-websites/",
+      "permanent": true
+    },
+    {
+      "source": "/websites-for-holiday-rentals/",
+      "destination": "/small-business-websites/",
+      "permanent": true
+    },
+    {
+      "source": "/hr/web-stranice-za-izlete-brodom",
       "destination": "/hr/izrada-web-stranica/",
       "permanent": true
     },
     {
-      "source": "/hr/web-stranice-za-restorane/?",
+      "source": "/hr/web-stranice-za-izlete-brodom/",
+      "destination": "/hr/izrada-web-stranica/",
+      "permanent": true
+    },
+    {
+      "source": "/hr/web-stranice-za-restorane",
+      "destination": "/hr/izrada-web-stranica/",
+      "permanent": true
+    },
+    {
+      "source": "/hr/web-stranice-za-restorane/",
       "destination": "/hr/izrada-web-stranica/",
       "permanent": true
     }
