@@ -103,6 +103,11 @@ FORM_ENDPOINT = 'https://formspree.io/f/abcdwxyz'
 
 and run `python3 tools/build.py`. Send one test from the live preview (Formspree confirms the first one).
 
+## Old addresses
+
+`vercel.json` `redirects` sends removed niche pages (boat tours, holiday rentals, restaurants) that Google had indexed
+to `/small-business-websites/` (EN) and `/hr/izrada-web-stranica/` (HR) with a permanent redirect.
+
 ## Social links
 
 Instagram and TikTok (@donebyzip) are in the footer under the tagline (`src/partials/footer-en.html`, `footer-hr.html`,
